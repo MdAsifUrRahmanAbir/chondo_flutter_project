@@ -10,9 +10,9 @@ class HomeViews extends StatelessWidget {
       appBar: AppBar(
         title: Text('AppBar'),
       ),
-      body: Column(
-        children: [],
-      ),
+      body: Center(
+        child: Text('Home Page'),
+      )
     );
   }
 }
