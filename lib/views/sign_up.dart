@@ -22,7 +22,7 @@ class SignupScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment. center,
               children: [
 
-                SizedBox(height: 70,),
+                const SizedBox(height: 70,),
 
 
                 containerButton(
@@ -37,7 +37,7 @@ class SignupScreen extends StatelessWidget {
                     FontWeight.w500
                 ),
 
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
                 containerButton(
                         (){
@@ -65,16 +65,15 @@ class SignupScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:  40),
                       child: TextFormField(
+                       // controller: ,
                         textAlign: TextAlign.center,
                         decoration:  InputDecoration(
-                            labelText: 'First Name',
-                            alignLabelWithHint: true,
-                            hintStyle: const TextStyle(color: Color(0x00ff8ab5), fontSize: 15),
-                            fillColor: const Color(0x00ff8ab5),
+                            hintText: 'First Name',
+                            hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
+                            fillColor: Colors.redAccent.withOpacity(.1),
                             filled: true,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50),
-                                borderSide: BorderSide(color: Color(0xFF8AB5))
                             )
                         ),
                       ),
@@ -85,14 +84,12 @@ class SignupScreen extends StatelessWidget {
                       child: TextFormField(
                         textAlign: TextAlign.center,
                         decoration:  InputDecoration(
-                            labelText: 'Last Name',
-                            alignLabelWithHint: true,
-                            hintStyle: const TextStyle(color: Color(0x00ff8ab5), fontSize: 15),
-                            fillColor: const Color(0x00ff8ab5),
+                          hintText: 'Last Name',
+                            hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), backgroundColor: Color(0xFFDBE8),fontSize: 15),
                             filled: true,
+                            fillColor: Colors.redAccent.withOpacity(.1),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50),
-                                borderSide: const BorderSide(color: Color(0xFF8AB5))
                             )
                         ),
                       ),
@@ -103,14 +100,12 @@ class SignupScreen extends StatelessWidget {
                       child: TextFormField(
                         textAlign: TextAlign.center,
                         decoration:  InputDecoration(
-                            labelText: 'Chose Username',
-                            alignLabelWithHint: true,
-                            hintStyle: const TextStyle(color: Color(0x00ff8ab5), fontSize: 15),
-                            fillColor: const Color(0x00ff8ab5),
+                            hintText: 'Chose Username',
+                            hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
+                            fillColor: Colors.redAccent.withOpacity(.1),
                             filled: true,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50),
-                                borderSide: BorderSide(color: Color(0xFF8AB5))
                             )
                         ),
                       ),
@@ -121,14 +116,12 @@ class SignupScreen extends StatelessWidget {
                       child: TextFormField(
                         textAlign: TextAlign.center,
                         decoration:  InputDecoration(
-                            labelText: 'Email Address',
-                            alignLabelWithHint: true,
-                            hintStyle: const TextStyle(color: Color(0x00ff8ab5), fontSize: 15),
-                            fillColor: const Color(0x00ff8ab5),
+                            hintText: 'Email Address',
+                            hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
+                            fillColor: Colors.redAccent.withOpacity(.1),
                             filled: true,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50),
-                                borderSide: const BorderSide(color: Color(0xFF8AB5))
                             )
                         ),
                       ),

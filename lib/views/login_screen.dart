@@ -67,14 +67,12 @@ class LoginScreen extends StatelessWidget {
                   child: TextFormField(
                     textAlign: TextAlign.center,
                     decoration:  InputDecoration(
-                        labelText: 'Enter email or username',
-                        alignLabelWithHint: true,
-                        hintStyle: const TextStyle(color: Color(0x00ff8ab5), fontSize: 15),
-                        fillColor: const Color(0x00ff8ab5),
+                        hintText: 'Enter email or username',
+                        hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
+                        fillColor: Colors.redAccent.withOpacity(.1),
                         filled: true,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(color: Color(0xFF8AB5))
                         )
                     ),
                   ),
@@ -85,14 +83,12 @@ class LoginScreen extends StatelessWidget {
                   child: TextFormField(
                     textAlign: TextAlign.center,
                     decoration:  InputDecoration(
-                        labelText: 'Enter password',
-                        alignLabelWithHint: true,
-                        hintStyle: const TextStyle(color: Color(0x00ff8ab5), fontSize: 15),
-                        fillColor: const Color(0x00ff8ab5),
+                        hintText: 'Enter password',
+                        hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
+                        fillColor: Colors.redAccent.withOpacity(.1),
                         filled: true,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50),
-                            borderSide: const BorderSide(color: Color(0xFF8AB5))
                         )
                     ),
                   ),
@@ -104,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                     Text('Don’t have an account?', style: GoogleFonts.roboto(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
                     TextButton(
                       onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> SignupScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const SignupScreen()));
                       },
                       child: Text('Signup', style: GoogleFonts.roboto(fontSize: 12, fontWeight: FontWeight.w900,),textAlign: TextAlign.center,),
 
