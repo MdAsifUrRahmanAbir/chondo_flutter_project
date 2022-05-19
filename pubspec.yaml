@@ -36,6 +36,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^2.3.2
   get:
+  firebase_auth:
+  firebase_core:
+  cloud_firestore:
+  flutter_toast_message:
 
 dev_dependencies:
   flutter_test:

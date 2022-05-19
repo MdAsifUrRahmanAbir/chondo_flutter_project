@@ -105,7 +105,7 @@ class WelcomeScreen extends StatelessWidget {
     return InkWell(
 
       onTap: (){
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> const LoginScreen()), (route) => false);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>  LoginScreen()), (route) => false);
       },
 
       child: Container(

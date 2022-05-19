@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1077749501608",
+    "project_id": "chondo-flutter-project",
+    "storage_bucket": "chondo-flutter-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077749501608:android:37759449b4c06b7a7b3c9d",
+        "android_client_info": {
+          "package_name": "com.example.chondo_flutter_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077749501608-d0sn1frg9u8ocds8afgmpoai3ebfm42e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnMl7i0mDTYd099nqOAuogID3_BM8AkKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077749501608-d0sn1frg9u8ocds8afgmpoai3ebfm42e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

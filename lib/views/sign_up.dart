@@ -1,9 +1,16 @@
 import 'package:chondo_flutter_project/widgets/container.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+   SignupScreen({Key? key}) : super(key: key);
+
+   TextEditingController _emailController = TextEditingController();
+   TextEditingController _passController = TextEditingController();
+   TextEditingController _userNameController = TextEditingController();
+   TextEditingController _firstNameController = TextEditingController();
+   TextEditingController _lastNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +72,8 @@ class SignupScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:  40),
                       child: TextFormField(
-                       // controller: ,
                         textAlign: TextAlign.center,
+                        controller: _firstNameController,
                         decoration:  InputDecoration(
                             hintText: 'First Name',
                             hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
@@ -83,6 +90,7 @@ class SignupScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal:  40),
                       child: TextFormField(
                         textAlign: TextAlign.center,
+                        controller: _lastNameController,
                         decoration:  InputDecoration(
                           hintText: 'Last Name',
                             hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), backgroundColor: Color(0xFFDBE8),fontSize: 15),
@@ -99,6 +107,7 @@ class SignupScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal:  40),
                       child: TextFormField(
                         textAlign: TextAlign.center,
+                        controller: _userNameController,
                         decoration:  InputDecoration(
                             hintText: 'Chose Username',
                             hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
@@ -115,6 +124,7 @@ class SignupScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal:  40),
                       child: TextFormField(
                         textAlign: TextAlign.center,
+                        controller: _emailController,
                         decoration:  InputDecoration(
                             hintText: 'Email Address',
                             hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
@@ -122,6 +132,24 @@ class SignupScreen extends StatelessWidget {
                             filled: true,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50),
+                            )
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 20,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal:  40),
+                      child: TextFormField(
+                        textAlign: TextAlign.center,
+                        controller: _passController,
+                        decoration:  InputDecoration(
+                            hintText: 'Password',
+                            hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
+                            fillColor: Colors.redAccent.withOpacity(.1),
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
                             )
                         ),
                       ),
@@ -134,7 +162,11 @@ class SignupScreen extends StatelessWidget {
                 InkWell(
 
                   onTap: (){
-
+                    Signup(email: _emailController.text,
+                        pass: _passController.text,
+                        userName: _userNameController.text,
+                        firstName: _firstNameController.text,
+                        lastName: _lastNameController.text);
                   },
 
                   child: Container(
@@ -173,4 +205,22 @@ class SignupScreen extends StatelessWidget {
       ),
     );
   }
+
+   Signup({required String email, required String pass, required String userName, required String firstName, required String lastName}) async{
+     try {
+       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+         email: email,
+         password: pass,
+       );
+       print("Success");
+     } on FirebaseAuthException catch (e) {
+       if (e.code == 'weak-password') {
+         print('The password provided is too weak.');
+       } else if (e.code == 'email-already-in-use') {
+         print('The account already exists for that email.');
+       }
+     } catch (e) {
+       print(e);
+     }
+   }
 }
