@@ -1,4 +1,5 @@
 import 'package:chondo_flutter_project/models/all_views.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -23,15 +24,15 @@ class SplashScreen extends StatelessWidget {
 
   Future gotohome(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 3));
-    // if(FirebaseAuth.instance.currentUser != null){
-    //   Navigator.pushReplacement(
-    //       context, MaterialPageRoute(builder: (context) => HomeScreen()));
-    // }else {
-    //   Navigator.pushReplacement(
-    //       context, MaterialPageRoute(builder: (context) => LoginScreen()));
-    //   //Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
-    // }
-    Navigator.pushReplacement(
-               context, MaterialPageRoute(builder: (context) =>  WelcomeScreen()));
+    if(FirebaseAuth.instance.currentUser != null){
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LangPage()));
+    }else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
+      //Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
+    }
+    // Navigator.pushReplacement(
+    //            context, MaterialPageRoute(builder: (context) =>  WelcomeScreen()));
   }
 }

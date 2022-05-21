@@ -39,7 +39,13 @@ dependencies:
   firebase_auth:
   firebase_core:
   cloud_firestore:
-  flutter_toast_message:
+  firebase_storage:
+  image_picker:
+  google_sign_in:
+  flutter_facebook_auth:
+  shared_preferences:
+  scaffold_gradient_background:
+  horizontal_picker:
 
 dev_dependencies:
   flutter_test:

@@ -1,13 +1,21 @@
+import 'package:chondo_flutter_project/auth/facebook_auth_class.dart';
+import 'package:chondo_flutter_project/auth/google_auth_class.dart';
 import 'package:chondo_flutter_project/models/all_views.dart';
 import 'package:chondo_flutter_project/widgets/container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
    LoginScreen({Key? key}) : super(key: key);
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _emailController = TextEditingController();
+
   TextEditingController _passController = TextEditingController();
 
   Login({required BuildContext context, required String email, required String pass}) async{
@@ -16,7 +24,7 @@ class LoginScreen extends StatelessWidget {
           email: email,
           password: pass
       );
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomeViews()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>  LangPage()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -31,6 +39,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        alignment: Alignment.center,
         height: double.infinity,
         width: double.infinity,
         decoration: const BoxDecoration(
@@ -42,7 +51,6 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment. center,
             children: [
-              const SizedBox(height: 60,),
 
               Text('Welcome back!\nLogin to your Chondo account',
                 style: GoogleFonts.roboto(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w700,),
@@ -57,7 +65,7 @@ class LoginScreen extends StatelessWidget {
 
                 containerButton(
                     (){
-
+                      signInWithGoogle(context);
                     },
                     Colors.white,
                     'assets/logos/googlelogo.png',
@@ -67,9 +75,10 @@ class LoginScreen extends StatelessWidget {
                     FontWeight.w700
                 ),
 
+
                 containerButton(
                     (){
-
+                      signInWithFacebook(context);
                     },
                     Colors.blue,
                     'assets/logos/fblogo.png',

@@ -1,5 +1,10 @@
-export 'package:chondo_flutter_project/views/home_views.dart';
+//export 'package:chondo_flutter_project/views/home_views.dart';
 export 'package:chondo_flutter_project/views/splash_screen.dart';
 export 'package:chondo_flutter_project/views/wellcome_screen.dart';
 export 'package:chondo_flutter_project/views/login_screen.dart';
 export 'package:chondo_flutter_project/views/sign_up.dart';
+export 'package:chondo_flutter_project/views/questions/lang_page.dart';
+export 'package:chondo_flutter_project/views/questions/question1.dart';
+export 'package:chondo_flutter_project/views/questions/question2.dart';
+export 'package:chondo_flutter_project/views/questions/question3.dart';
+export 'package:chondo_flutter_project/views/questions/question4.dart';
