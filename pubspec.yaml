@@ -46,6 +46,11 @@ dependencies:
   shared_preferences:
   scaffold_gradient_background:
   horizontal_picker:
+  scrollable_clean_calendar: ^1.2.0
+  calendar_timeline:
+  fancy_bottom_navigation:
+  table_calendar:
+
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +93,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+
+
+  fonts:
+   - family: MyFlutterApp
+     fonts:
+       - asset: assets/MyFlutterApp.ttf
+
   # fonts:
   #   - family: Schyler
   #     fonts:

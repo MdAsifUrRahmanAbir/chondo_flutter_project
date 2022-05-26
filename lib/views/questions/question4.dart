@@ -1,4 +1,5 @@
 import 'package:chondo_flutter_project/models/all_views.dart';
+import 'package:chondo_flutter_project/views/bottom_nav_pages/bottom_nav.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,8 +35,9 @@ class _Question4State extends State<Question4> {
       body: Center(
         child: InkWell(
           onTap: () async{
-            await FirebaseAuth.instance.signOut();
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+
+            // await FirebaseAuth.instance.signOut();
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNav()));
           },
           child: Text('Analyzing ',
             style: GoogleFonts.roboto(fontSize: 30, color: Colors.white, fontWeight: FontWeight.w700,),
