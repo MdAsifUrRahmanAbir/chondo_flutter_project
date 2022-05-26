@@ -116,19 +116,6 @@ class _Question3State extends State<Question3> {
                    lastDay: DateTime.now().add(const Duration(days: 60)),
                    focusedDay: _selectedDay,
 
-                    // calendarBuilders: CalendarBuilders(
-                    //   selectedBuilder: (context, date, events) => Container(
-                    //       margin: const EdgeInsets.all(5.0),
-                    //       alignment: Alignment.center,
-                    //       decoration: BoxDecoration(
-                    //           color: Theme.of(context).primaryColor,
-                    //           borderRadius: BorderRadius.circular(8.0)),
-                    //       child: Text(
-                    //         date.day.toString(),
-                    //         style: TextStyle(color: Colors.white),
-                    //       )),
-                    // ),
-
                    selectedDayPredicate: (day) {
                      return isSameDay(_selectedDay, day);
                    },
