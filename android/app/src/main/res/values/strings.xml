@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <string name="app_name">chondo flutter project</string>
+    <string name="facebook_app_id">830220784602410</string>
+    <string name="fb_login_protocol_scheme">fb830220784602410</string>
+    <string name="facebook_client_token">7ba5a11a2fade51c4441d4bd59e5d68e</string>
+</resources>
+
+
