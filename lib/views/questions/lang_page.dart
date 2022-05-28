@@ -86,21 +86,6 @@ class _LangPageState extends State<LangPage> {
                   ),
                 ),
 
-                const SizedBox(height: 11,),
-                InkWell(
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 83,
-                    width: 270,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffFFB1CE),
-                        borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: Text('Partner’s Period',
-                      style: GoogleFonts.roboto(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w700,),
-                      textAlign: TextAlign.center,),
-                  ),
-                ),
 
                 const SizedBox(height: 130,),
                 InkWell(
