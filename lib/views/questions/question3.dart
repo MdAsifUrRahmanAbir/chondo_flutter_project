@@ -93,11 +93,10 @@ class _Question3State extends State<Question3> {
 
               const SizedBox(height: 33,),
 
-              Text(_selectedDay.toString(),
-                style: GoogleFonts.roboto(fontSize: 30, color: const Color(0xffF74D8B), fontWeight: FontWeight.w700,),
-                textAlign: TextAlign.center,),
+              // Text(_selectedDay.toString(),
+              //   style: GoogleFonts.roboto(fontSize: 30, color: const Color(0xffF74D8B), fontWeight: FontWeight.w700,),
+              //   textAlign: TextAlign.center,),
 
-              const SizedBox(height: 13,),
               Container(
 
                 height: 350,
@@ -115,7 +114,7 @@ class _Question3State extends State<Question3> {
                    firstDay: DateTime.now().add( const Duration(days: -60)),
                    lastDay: DateTime.now().add(const Duration(days: 60)),
                    focusedDay: _selectedDay,
-
+                   rowHeight: 40,
                    selectedDayPredicate: (day) {
                      return isSameDay(_selectedDay, day);
                    },

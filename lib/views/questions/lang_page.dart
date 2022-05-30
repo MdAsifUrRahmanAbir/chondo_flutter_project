@@ -47,12 +47,16 @@ class _LangPageState extends State<LangPage> {
                           value: _value,
                           items:  [
                             DropdownMenuItem(
-                              child: Text("English", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
+                              child: Text("Select Language", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
                               value: 1,
                             ),
                             DropdownMenuItem(
-                              child: Text("Bangla", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
+                              child: Text("English", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
                               value: 2,
+                            ),
+                            DropdownMenuItem(
+                              child: Text("Bangla", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
+                              value: 3,
                             )
                           ],
 

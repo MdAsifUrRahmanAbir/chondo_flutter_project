@@ -1,9 +1,11 @@
+import 'package:chondo_flutter_project/widgets/my_flutter_app_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scrollable_clean_calendar/controllers/clean_calendar_controller.dart';
 import 'package:scrollable_clean_calendar/scrollable_clean_calendar.dart';
 import 'package:scrollable_clean_calendar/utils/enums.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class HomePage extends StatelessWidget {
    HomePage({Key? key}) : super(key: key);
@@ -168,7 +170,7 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 12,),
 
               Container(
-                height: 350,
+                height: 355,
                 width: double.infinity,
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -179,16 +181,48 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton.icon(onPressed: (){}, icon: const Icon(Icons.edit,color: Colors.black,), label: const Text('Edit', style: TextStyle(color: Colors.black),)),
+                    // SizedBox(
+                    //   height: 300,
+                    //   width: MediaQuery.of(context).size.width - 36,
+                    //   child: ScrollableCleanCalendar(
+                    //     calendarController: calendarController,
+                    //     layout: Layout.BEAUTY,
+                    //     calendarCrossAxisSpacing: 0,
+                    //     daySelectedBackgroundColor: const Color(0xffF74D8B),
+                    //     daySelectedBackgroundColorBetween: const Color(0xffFFC7DB),
+                    //     dayRadius: 20,
+                    //   ),
+                    // ),
+
                     SizedBox(
-                      height: 300,
-                      width: MediaQuery.of(context).size.width - 36,
-                      child: ScrollableCleanCalendar(
-                        calendarController: calendarController,
-                        layout: Layout.BEAUTY,
-                        calendarCrossAxisSpacing: 0,
-                        daySelectedBackgroundColor: const Color(0xffF74D8B),
-                        daySelectedBackgroundColorBetween: const Color(0xffFFC7DB),
-                        dayRadius: 20,
+
+                      height: 305,
+                      //width: 327,
+                      // decoration: BoxDecoration(
+                      //     color: Colors.white,
+                      //     borderRadius: BorderRadius.circular(28)
+                      // ),
+
+                      child: TableCalendar(
+                        firstDay: DateTime.now().add( const Duration(days: -10)),
+                        lastDay: DateTime.now().add(const Duration(days: 30)),
+                        //focusedDay: _selectedDay,
+                        rowHeight: 35,
+
+                        rangeStartDay: DateTime.now(),
+                        rangeEndDay: DateTime.now().add(const Duration(days: 8)),
+                        focusedDay: DateTime.now(),
+
+                        // selectedDayPredicate: (day) {
+                        //   return isSameDay(_selectedDay, day);
+                        // },
+                        // onDaySelected: (selectedDay, focusedDay) {
+                        //   setState(() {
+                        //     _selectedDay = selectedDay;
+                        //     _focusedDay = focusedDay; // update `_focusedDay` here as well
+                        //   });
+                        // },
+
                       ),
                     ),
                   ],
@@ -207,7 +241,86 @@ class HomePage extends StatelessWidget {
 
                   FloatingActionButton(
                       onPressed: (){
+                        showDialog(
 
+                            context: context,
+                            builder: (context){
+                              return Dialog(
+                                alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, .5),
+                                backgroundColor: Colors.transparent,
+                                elevation: 1,
+                                child: Container(
+                                  padding: const EdgeInsets.all(12),
+                                  height: 255,
+                                  width: 290,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffFFFFFF).withOpacity(.8),
+                                    borderRadius: BorderRadius.circular(27),
+                                  ),
+
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children:  [
+                                          const Spacer(),
+                                          Image.asset('assets/logos/xcircle.png')
+                                        ],
+                                      ),
+
+                                      const SizedBox(height: 10,),
+                                      InkWell(
+                                        onTap: (){
+                                          _createNote(context);
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          height: 54,
+                                          width: 265,
+                                          decoration: BoxDecoration(
+                                              color: Colors.transparent,
+                                              borderRadius: BorderRadius.circular(25),
+                                              border: Border.all(width: 2, color: const Color(0xff22215B))
+                                          ),
+                                          child: Text('Create Note',
+                                            style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                                            textAlign: TextAlign.center,),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10,),
+                                      Container(
+                                        alignment: Alignment.center,
+                                        height: 54,
+                                        width: 265,
+                                        decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius: BorderRadius.circular(25),
+                                            border: Border.all(width: 2, color: const Color(0xff22215B))
+                                        ),
+                                        child: Text('Add Mood',
+                                          style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                                          textAlign: TextAlign.center,),
+                                      ),
+                                      const SizedBox(height: 10,),
+                                      Container(
+                                        alignment: Alignment.center,
+                                        height: 54,
+                                        width: 265,
+                                        decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius: BorderRadius.circular(25),
+                                            border: Border.all(width: 2, color: const Color(0xff22215B))
+                                        ),
+                                        child: Text('Add Symptoms',
+                                          style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                                          textAlign: TextAlign.center,),
+                                      ),
+                                    ],
+                                  ),
+
+                                ),
+                              );
+                            }
+                        );
                       },
                     backgroundColor: const Color(0xff212057),
                     child: const Icon(Icons.add,color: Colors.white,),
@@ -221,6 +334,59 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _createNote(BuildContext context) {
+    showDialog(
+
+        context: context,
+        builder: (context){
+          return Dialog(
+            alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, .5),
+            backgroundColor: Colors.transparent,
+            elevation: 1,
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              height: 567,
+              width: 290,
+              decoration: BoxDecoration(
+                color: const Color(0xffFFFFFF).withOpacity(.8),
+                borderRadius: BorderRadius.circular(27),
+              ),
+
+              child: Column(
+                children: [
+                  Row(
+                    children:  [
+                      const Icon(Icons.arrow_back),
+                      const Spacer(),
+                      Image.asset('assets/logos/xcircle.png')
+                    ],
+                  ),
+
+                  const SizedBox(height: 10,),
+                  TextFormField(
+                    textAlign: TextAlign.start,
+                    //controller: _emailController,
+                    maxLines: 6,
+                    decoration:  InputDecoration(
+                        hintText: 'Enter email or username',
+                        hintStyle:  const TextStyle(color: Color(0xff22215B), fontSize: 15),
+                        fillColor: Colors.transparent,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: const BorderSide(width: 2, color: Color(0xff22215B))
+                        )
+                    ),
+                  )
+                ],
+              ),
+
+            ),
+          );
+        }
     );
   }
 }
