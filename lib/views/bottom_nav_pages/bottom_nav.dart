@@ -1,3 +1,5 @@
+import 'package:chondo_flutter_project/views/settings.dart';
+import 'package:chondo_flutter_project/views/notification.dart';
 import 'package:chondo_flutter_project/widgets/my_flutter_app_icons.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
@@ -36,10 +38,22 @@ class _BottomNavState extends State<BottomNav> {
         title: Text(now, style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xffF74D8B), fontWeight: FontWeight.w700,),
           textAlign: TextAlign.center,),
         centerTitle: true,
-        leading: const Icon(MyFlutterApp.settings, color:  Color(0xffFF357D),),
-        actions: const [
-          Icon(MyFlutterApp.bell, color: Color(0xffFF357D),),
-          SizedBox(width: 10,)
+        leading:  IconButton(
+          icon: const Icon(MyFlutterApp.settings, color: Color(0xffFF357D),),
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> Settings()));
+          },
+
+          ),
+        actions:  [
+          IconButton(
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>  NotificationPage()));
+              },
+              icon:const Icon(MyFlutterApp.bell, color: Color(0xffFF357D),),
+
+          ),
+          const SizedBox(width: 10,)
         ],
       ),
       body: _pages[currentPage],

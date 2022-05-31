@@ -1,30 +1,14 @@
-import 'package:chondo_flutter_project/widgets/my_flutter_app_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:scrollable_clean_calendar/controllers/clean_calendar_controller.dart';
-import 'package:scrollable_clean_calendar/scrollable_clean_calendar.dart';
-import 'package:scrollable_clean_calendar/utils/enums.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class HomePage extends StatelessWidget {
    HomePage({Key? key}) : super(key: key);
 
-  final calendarController = CleanCalendarController(
-    minDate: DateTime.now().add(Duration(days: -10)),
-    maxDate: DateTime.now().add(const Duration(days: 30)),
-    readOnly: true,
-    onRangeSelected: (firstDate, secondDate) {},
-    onDayTapped: (date) {},
-    // readOnly: true,
-    onPreviousMinDateTapped: (date) {},
-    onAfterMaxDateTapped: (date) {},
-    weekdayStart: DateTime.monday,
-     initialDateSelected: DateTime.now().add(const Duration(days: -5)),
-     endDateSelected: DateTime.now().add(const Duration(days: 3)),
-  );
 
-
+   final TextEditingController _noteTitleController = TextEditingController();
+   final TextEditingController _noteBodyController = TextEditingController();
 
 
    @override
@@ -212,6 +196,8 @@ class HomePage extends StatelessWidget {
                         rangeStartDay: DateTime.now(),
                         rangeEndDay: DateTime.now().add(const Duration(days: 8)),
                         focusedDay: DateTime.now(),
+                        //calendarStyle: ,
+
 
                         // selectedDayPredicate: (day) {
                         //   return isSameDay(_selectedDay, day);
@@ -348,7 +334,7 @@ class HomePage extends StatelessWidget {
             elevation: 1,
             child: Container(
               padding: const EdgeInsets.all(12),
-              height: 567,
+              height: 500,
               width: 290,
               decoration: BoxDecoration(
                 color: const Color(0xffFFFFFF).withOpacity(.8),
@@ -365,11 +351,15 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
 
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 12,),
+                  Text('Note Title',
+                    style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                    textAlign: TextAlign.start,),
+                  const SizedBox(height: 12,),
                   TextFormField(
                     textAlign: TextAlign.start,
-                    //controller: _emailController,
-                    maxLines: 6,
+                    controller: _noteTitleController,
+                    //maxLines: 6,
                     decoration:  InputDecoration(
                         hintText: 'Enter email or username',
                         hintStyle:  const TextStyle(color: Color(0xff22215B), fontSize: 15),
@@ -379,6 +369,51 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(25),
                           borderSide: const BorderSide(width: 2, color: Color(0xff22215B))
                         )
+                    ),
+                  ),
+
+                  const SizedBox(height: 12,),
+                  Text('Note Body',
+                    style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                    textAlign: TextAlign.start,),
+                  const SizedBox(height: 12,),
+
+                  TextFormField(
+                    textAlign: TextAlign.start,
+                    controller: _noteBodyController,
+                    maxLines: 8,
+                    decoration:  InputDecoration(
+                        hintText: 'Enter email or username',
+                        hintStyle:  const TextStyle(color: Color(0xff22215B), fontSize: 15),
+                        fillColor: Colors.transparent,
+                        filled: true,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: const BorderSide(width: 2, color: Color(0xff22215B))
+                        )
+                    ),
+                  ),
+                  const SizedBox(height: 12,),
+
+
+                  InkWell(
+
+                    onTap: (){
+                      //Login(context: context, email: _emailController.text, pass: _passController.text);
+                    },
+
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 52,
+                      width: 150,
+                      decoration:  BoxDecoration(
+                          color: const Color(0xffFF478A),
+                        borderRadius: BorderRadius.circular(25)
+                      ),
+
+                      child: Text('Create',
+                        style: GoogleFonts.roboto(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700,),
+                        textAlign: TextAlign.center,),
                     ),
                   )
                 ],
