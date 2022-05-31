@@ -1,16 +1,15 @@
+import 'package:chondo_flutter_project/controllers/questions_controller.dart';
 import 'package:chondo_flutter_project/models/all_views.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LangPage extends StatefulWidget {
-  const LangPage({Key? key}) : super(key: key);
+class LangPage extends StatelessWidget {
+   LangPage({Key? key}) : super(key: key);
 
-  @override
-  _LangPageState createState() => _LangPageState();
-}
+   final QuestionsController _controller = Get.put(QuestionsController());
 
-class _LangPageState extends State<LangPage> {
-  int _value = 1;
+  dynamic _value = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,17 +46,22 @@ class _LangPageState extends State<LangPage> {
                           value: _value,
                           items:  [
                             DropdownMenuItem(
-                              child: Text("English", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
+                              child: Text("Select Language", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
                               value: 1,
                             ),
                             DropdownMenuItem(
-                              child: Text("Bangla", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
+                              child: Text("English", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
                               value: 2,
+                            ),
+                            DropdownMenuItem(
+                              child: Text("Bangla", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
+                              value: 3,
                             )
                           ],
 
                           onChanged: ( value){
-                            _value = _value;
+                            _value = value;
+                            print(value);
                           },
                       ),
                     ],
@@ -86,55 +90,106 @@ class _LangPageState extends State<LangPage> {
                   ),
                 ),
 
-                const SizedBox(height: 11,),
-                InkWell(
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 83,
-                    width: 270,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffFFB1CE),
-                        borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: Text('Partner’s Period',
-                      style: GoogleFonts.roboto(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w700,),
-                      textAlign: TextAlign.center,),
-                  ),
-                ),
 
                 const SizedBox(height: 130,),
+
                 InkWell(
-                  
+
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> Question1()));
                   },
                   child: Container(
-                    alignment: Alignment.center,
-                    height: 83,
-                    width: 270,
-                    decoration: BoxDecoration(
+                      alignment: Alignment.center,
+                      height: 83,
+                      width: 270,
+                      decoration: BoxDecoration(
                         //color: const Color(0xffFB699E),
-                        gradient: const LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [
                               Color(0xffFF81AF),
                               Color(0xffF12F76)
                             ],
-                          //stops: [0,3,10,0]
-                        ),
-                        borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text('Continue',
-                          style: GoogleFonts.roboto(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w700,),
-                          textAlign: TextAlign.center,),
-                        const SizedBox(width: 35,),
-                        const Icon(Icons.arrow_forward_ios, size: 20,color: Colors.white,)
-                      ],
-                    )
+                            //stops: [0,3,10,0]
+                          ),
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Continue',
+                            style: GoogleFonts.roboto(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w700,),
+                            textAlign: TextAlign.center,),
+                          const SizedBox(width: 35,),
+                          const Icon(Icons.arrow_forward_ios, size: 20,color: Colors.white,)
+                        ],
+                      )
                   ),
                 ),
+
+
+                // Obx(()=> _value==1? InkWell(
+                //
+                //   onTap: (){
+                //     Navigator.push(context, MaterialPageRoute(builder: (context)=> Question1()));
+                //   },
+                //   child: Container(
+                //       alignment: Alignment.center,
+                //       height: 83,
+                //       width: 270,
+                //       decoration: BoxDecoration(
+                //         //color: const Color(0xffFB699E),
+                //           gradient: const LinearGradient(
+                //             colors: [
+                //               Color(0xffC2C2C2),
+                //               Color(0xff8C8C8C)
+                //             ],
+                //             //stops: [0,3,10,0]
+                //           ),
+                //           borderRadius: BorderRadius.circular(20)
+                //       ),
+                //       child: Row(
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: [
+                //           Text('Continue',
+                //             style: GoogleFonts.roboto(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w700,),
+                //             textAlign: TextAlign.center,),
+                //           const SizedBox(width: 35,),
+                //           const Icon(Icons.arrow_forward_ios, size: 20,color: Colors.white,)
+                //         ],
+                //       )
+                //   ),
+                // ):InkWell(
+                //
+                //   onTap: (){
+                //     Navigator.push(context, MaterialPageRoute(builder: (context)=> Question1()));
+                //   },
+                //   child: Container(
+                //       alignment: Alignment.center,
+                //       height: 83,
+                //       width: 270,
+                //       decoration: BoxDecoration(
+                //         //color: const Color(0xffFB699E),
+                //           gradient: const LinearGradient(
+                //             colors: [
+                //               Color(0xffFF81AF),
+                //               Color(0xffF12F76)
+                //             ],
+                //             //stops: [0,3,10,0]
+                //           ),
+                //           borderRadius: BorderRadius.circular(20)
+                //       ),
+                //       child: Row(
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: [
+                //           Text('Continue',
+                //             style: GoogleFonts.roboto(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w700,),
+                //             textAlign: TextAlign.center,),
+                //           const SizedBox(width: 35,),
+                //           const Icon(Icons.arrow_forward_ios, size: 20,color: Colors.white,)
+                //         ],
+                //       )
+                //   ),
+                // ),)
 
               ],
             ),

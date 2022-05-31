@@ -47,7 +47,6 @@ dependencies:
   scaffold_gradient_background:
   horizontal_picker:
   scrollable_clean_calendar: ^1.2.0
-  calendar_timeline:
   fancy_bottom_navigation:
   table_calendar:
 
