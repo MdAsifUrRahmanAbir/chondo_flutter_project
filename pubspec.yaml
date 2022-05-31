@@ -49,6 +49,9 @@ dependencies:
   scrollable_clean_calendar: ^1.2.0
   fancy_bottom_navigation:
   table_calendar:
+  custom_rating_bar: ^2.0.0
+  emoji_picker_flutter: ^1.2.1
+  webview_flutter: ^3.0.4
 
 
 dev_dependencies:

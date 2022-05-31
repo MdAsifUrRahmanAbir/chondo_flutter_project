@@ -21,7 +21,7 @@ class _BottomNavState extends State<BottomNav> {
   String now = DateFormat('dd').format(DateTime.now());
 
   final List _pages = [
-    CalanderPage(),
+    ReportPage(),
     BlogPage(),
     HomePage(),
     VideoPage(),

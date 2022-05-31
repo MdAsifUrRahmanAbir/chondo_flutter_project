@@ -1,7 +1,13 @@
+import 'dart:io';
+
+import 'package:chondo_flutter_project/widgets/my_flutter_app_icons.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:custom_rating_bar/custom_rating_bar.dart';
+
 
 class HomePage extends StatelessWidget {
    HomePage({Key? key}) : super(key: key);
@@ -10,11 +16,14 @@ class HomePage extends StatelessWidget {
    final TextEditingController _noteTitleController = TextEditingController();
    final TextEditingController _noteBodyController = TextEditingController();
 
+   double _progressValue1 = 16;
+   double _progressValue2 = 8;
+   double _progressValue3 = 8;
+
 
    @override
   Widget build(BuildContext context) {
-     double _progressValue1 = 16;
-     double _progressValue2 = 8;
+
 
 
     return Scaffold(
@@ -273,32 +282,44 @@ class HomePage extends StatelessWidget {
                                         ),
                                       ),
                                       const SizedBox(height: 10,),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        height: 54,
-                                        width: 265,
-                                        decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius: BorderRadius.circular(25),
-                                            border: Border.all(width: 2, color: const Color(0xff22215B))
+                                      InkWell(
+
+                                        onTap: (){
+                                          _emojiPicker(context);
+                                        },
+
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          height: 54,
+                                          width: 265,
+                                          decoration: BoxDecoration(
+                                              color: Colors.transparent,
+                                              borderRadius: BorderRadius.circular(25),
+                                              border: Border.all(width: 2, color: const Color(0xff22215B))
+                                          ),
+                                          child: Text('Add Mood',
+                                            style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                                            textAlign: TextAlign.center,),
                                         ),
-                                        child: Text('Add Mood',
-                                          style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
-                                          textAlign: TextAlign.center,),
                                       ),
                                       const SizedBox(height: 10,),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        height: 54,
-                                        width: 265,
-                                        decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius: BorderRadius.circular(25),
-                                            border: Border.all(width: 2, color: const Color(0xff22215B))
+                                      InkWell(
+                                        onTap: (){
+                                          _createSymptoms(context);
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          height: 54,
+                                          width: 265,
+                                          decoration: BoxDecoration(
+                                              color: Colors.transparent,
+                                              borderRadius: BorderRadius.circular(25),
+                                              border: Border.all(width: 2, color: const Color(0xff22215B))
+                                          ),
+                                          child: Text('Add Symptoms',
+                                            style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                                            textAlign: TextAlign.center,),
                                         ),
-                                        child: Text('Add Symptoms',
-                                          style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
-                                          textAlign: TextAlign.center,),
                                       ),
                                     ],
                                   ),
@@ -424,4 +445,471 @@ class HomePage extends StatelessWidget {
         }
     );
   }
+  void _createSymptoms(BuildContext context) {
+    showDialog(
+
+        context: context,
+        builder: (context){
+          return Dialog(
+            alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, .5),
+            backgroundColor: Colors.transparent,
+            elevation: 1,
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              height: 500,
+              width: 290,
+              decoration: BoxDecoration(
+                color: const Color(0xffFFFFFF).withOpacity(.8),
+                borderRadius: BorderRadius.circular(27),
+              ),
+
+              child: Column(
+                children: [
+                  Row(
+                    children:  [
+                      const Icon(Icons.arrow_back),
+                      const Spacer(),
+                      Image.asset('assets/logos/xcircle.png')
+                    ],
+                  ),
+                  const SizedBox(height: 2,),
+
+                  Text('How’s Your Health Today?',
+                    style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                    textAlign: TextAlign.center,),
+
+                  const SizedBox(height: 17,),
+
+                  SizedBox(
+                    width: (MediaQuery.of(context).size.width -100)/1.5,
+                    child: LinearProgressIndicator(
+                      backgroundColor: const Color(0xffF47249),
+                      valueColor: const AlwaysStoppedAnimation<Color>(Color(0xffFFE7DF)),
+                      value: _progressValue3,
+                    ),
+                  ),
+
+
+
+                  const SizedBox(height: 12,),
+
+                  Text('Visit your doctor immediately\nif the meter above turns red',
+                    style: GoogleFonts.roboto(fontSize: 15, color: const Color(0xff22215B), fontWeight: FontWeight.w400,),
+                    textAlign: TextAlign.center,),
+
+                  const SizedBox(height: 28,),
+
+                  SizedBox(
+                    height: 250,
+                    child: ListView(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text('Blood Flow',
+                              style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                              textAlign: TextAlign.center,),
+
+
+                            const RatingBar.readOnly(
+                              isHalfAllowed: true,
+                              alignment: Alignment.center,
+                              filledIcon: MyFlutterApp.rattingfilled,
+                              halfFilledIcon: MyFlutterApp.rattingfilled,
+                              emptyIcon: MyFlutterApp.rating,
+                              filledColor: Color(0xffFF478A),
+                              emptyColor: Color(0xffFF478A),
+                              halfFilledColor: Color(0xffFF478A),
+                              initialRating: 0,
+                              maxRating: 5,
+                              size: 25,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 9,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text('Dizziness',
+                              style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                              textAlign: TextAlign.center,),
+
+
+                            const RatingBar.readOnly(
+                              isHalfAllowed: true,
+                              alignment: Alignment.center,
+                              filledIcon: MyFlutterApp.rattingfilled,
+                              halfFilledIcon: MyFlutterApp.rattingfilled,
+                              emptyIcon: MyFlutterApp.rating,
+                              filledColor: Color(0xffFF478A),
+                              emptyColor: Color(0xffFF478A),
+                              halfFilledColor: Color(0xffFF478A),
+                              initialRating: 0,
+                              maxRating: 5,
+                              size: 25,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 9,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text('Acne',
+                              style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                              textAlign: TextAlign.center,),
+
+
+                            const RatingBar.readOnly(
+                              isHalfAllowed: true,
+                              alignment: Alignment.center,
+                              filledIcon: MyFlutterApp.rattingfilled,
+                              halfFilledIcon: MyFlutterApp.rattingfilled,
+                              emptyIcon: MyFlutterApp.rating,
+                              filledColor: Color(0xffFF478A),
+                              emptyColor: Color(0xffFF478A),
+                              halfFilledColor: Color(0xffFF478A),
+                              initialRating: 0,
+                              maxRating: 5,
+                              size: 25,
+                            ),
+                          ],
+                        ), const SizedBox(height: 9,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text('Fever',
+                              style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                              textAlign: TextAlign.center,),
+
+
+                            const RatingBar.readOnly(
+                              isHalfAllowed: true,
+                              alignment: Alignment.center,
+                              filledIcon: MyFlutterApp.rattingfilled,
+                              halfFilledIcon: MyFlutterApp.rattingfilled,
+                              emptyIcon: MyFlutterApp.rating,
+                              filledColor: Color(0xffFF478A),
+                              emptyColor: Color(0xffFF478A),
+                              halfFilledColor: Color(0xffFF478A),
+                              initialRating: 0,
+                              maxRating: 5,
+                              size: 25,
+                            ),
+                          ],
+                        ), const SizedBox(height: 9,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text('Nausea',
+                              style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                              textAlign: TextAlign.center,),
+
+
+                            const RatingBar.readOnly(
+                              isHalfAllowed: true,
+                              alignment: Alignment.center,
+                              filledIcon: MyFlutterApp.rattingfilled,
+                              halfFilledIcon: MyFlutterApp.rattingfilled,
+                              emptyIcon: MyFlutterApp.rating,
+                              filledColor: Color(0xffFF478A),
+                              emptyColor: Color(0xffFF478A),
+                              halfFilledColor: Color(0xffFF478A),
+                              initialRating: 0,
+                              maxRating: 5,
+                              size: 25,
+                            ),
+                          ],
+                        ), const SizedBox(height: 9,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text('Shoulder Aches',
+                              style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                              textAlign: TextAlign.center,),
+
+
+                            const RatingBar.readOnly(
+                              isHalfAllowed: true,
+                              alignment: Alignment.center,
+                              filledIcon: MyFlutterApp.rattingfilled,
+                              halfFilledIcon: MyFlutterApp.rattingfilled,
+                              emptyIcon: MyFlutterApp.rating,
+                              filledColor: Color(0xffFF478A),
+                              emptyColor: Color(0xffFF478A),
+                              halfFilledColor: Color(0xffFF478A),
+                              initialRating: 0,
+                              maxRating: 5,
+                              size: 25,
+                            ),
+                          ],
+                        ), const SizedBox(height: 9,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text('Tender Breast',
+                              style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                              textAlign: TextAlign.center,),
+
+
+                            const RatingBar.readOnly(
+                              isHalfAllowed: true,
+                              alignment: Alignment.center,
+                              filledIcon: MyFlutterApp.rattingfilled,
+                              halfFilledIcon: MyFlutterApp.rattingfilled,
+                              emptyIcon: MyFlutterApp.rating,
+                              filledColor: Color(0xffFF478A),
+                              emptyColor: Color(0xffFF478A),
+                              halfFilledColor: Color(0xffFF478A),
+                              initialRating: 2,
+                              maxRating: 5,
+                              size: 25,
+                            ),
+                          ],
+                        ), const SizedBox(height: 9,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text('Neckaches',
+                              style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                              textAlign: TextAlign.center,),
+
+
+                            const RatingBar.readOnly(
+                              isHalfAllowed: true,
+                              alignment: Alignment.center,
+                              filledIcon: MyFlutterApp.rattingfilled,
+                              halfFilledIcon: MyFlutterApp.rattingfilled,
+                              emptyIcon: MyFlutterApp.rating,
+                              filledColor: Color(0xffFF478A),
+                              emptyColor: Color(0xffFF478A),
+                              halfFilledColor: Color(0xffFF478A),
+                              initialRating: 1,
+                              maxRating: 5,
+                              size: 25,
+                            ),
+                          ],
+                        ), const SizedBox(height: 9,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text('Lower Back Pain',
+                              style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                              textAlign: TextAlign.center,),
+
+
+                            const RatingBar.readOnly(
+                              isHalfAllowed: true,
+                              alignment: Alignment.center,
+                              filledIcon: MyFlutterApp.rattingfilled,
+                              halfFilledIcon: MyFlutterApp.rattingfilled,
+                              emptyIcon: MyFlutterApp.rating,
+                              filledColor: Color(0xffFF478A),
+                              emptyColor: Color(0xffFF478A),
+                              halfFilledColor: Color(0xffFF478A),
+                              initialRating: 4,
+                              maxRating: 5,
+                              size: 25,
+                            ),
+                          ],
+                        ), const SizedBox(height: 9,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text('Aabdominal Pain',
+                              style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                              textAlign: TextAlign.center,),
+
+
+                            const RatingBar.readOnly(
+                              isHalfAllowed: true,
+                              alignment: Alignment.center,
+                              filledIcon: MyFlutterApp.rattingfilled,
+                              halfFilledIcon: MyFlutterApp.rattingfilled,
+                              emptyIcon: MyFlutterApp.rating,
+                              filledColor: Color(0xffFF478A),
+                              emptyColor: Color(0xffFF478A),
+                              halfFilledColor: Color(0xffFF478A),
+                              initialRating: 5,
+                              maxRating: 5,
+                              size: 25,
+                            ),
+                          ],
+                        ), const SizedBox(height: 9,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text('Headache',
+                              style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                              textAlign: TextAlign.center,),
+
+
+                            const RatingBar.readOnly(
+                              isHalfAllowed: true,
+                              alignment: Alignment.center,
+                              filledIcon: MyFlutterApp.rattingfilled,
+                              halfFilledIcon: MyFlutterApp.rattingfilled,
+                              emptyIcon: MyFlutterApp.rating,
+                              filledColor: Color(0xffFF478A),
+                              emptyColor: Color(0xffFF478A),
+                              halfFilledColor: Color(0xffFF478A),
+                              initialRating: 2,
+                              maxRating: 5,
+                              size: 25,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+
+
+                  const SizedBox(height: 12,),
+                  InkWell(
+
+                    onTap: (){
+                      //Login(context: context, email: _emailController.text, pass: _passController.text);
+                    },
+
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 52,
+                      width: 250,
+                      decoration:  BoxDecoration(
+                          color: const Color(0xffFF478A),
+                        borderRadius: BorderRadius.circular(25)
+                      ),
+
+                      child: Text('Add Symptoms',
+                        style: GoogleFonts.roboto(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700,),
+                        textAlign: TextAlign.center,),
+                    ),
+                  )
+                ],
+              ),
+
+            ),
+          );
+        }
+    );
+  }
+  void _emojiPicker(BuildContext context) {
+    showDialog(
+
+        context: context,
+        builder: (context){
+          return Dialog(
+            alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, .5),
+            backgroundColor: Colors.transparent,
+            elevation: 1,
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              height: 500,
+              width: 290,
+              decoration: BoxDecoration(
+                color: const Color(0xffFFFFFF).withOpacity(.8),
+                borderRadius: BorderRadius.circular(27),
+              ),
+
+              child: Column(
+                children: [
+                  Row(
+                    children:  [
+                      const Icon(Icons.arrow_back),
+                      const Spacer(),
+                      Image.asset('assets/logos/xcircle.png')
+                    ],
+                  ),
+                  const SizedBox(height: 2,),
+
+                  Text('How Are Your Feeling Today?',
+                    style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                    textAlign: TextAlign.center,),
+
+                  Text('(Can Select Multiple)',
+                    style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w400,),
+                    textAlign: TextAlign.center,),
+
+                  const SizedBox(height: 17,),
+
+                  SizedBox(
+                    height: 260,
+
+                    child: ListView(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      children: [
+                        EmojiPicker(
+                          onEmojiSelected: (category, emoji) {
+                            // Do something when emoji is tapped
+                          },
+                          onBackspacePressed: () {
+                            // Backspace-Button tapped logic
+                            // Remove this line to also remove the button in the UI
+                          },
+                          config: const Config(
+                            columns: 7,
+                            emojiSizeMax: 32,
+                            verticalSpacing: 0,
+                            horizontalSpacing: 0,
+                            initCategory: Category.RECENT,
+                            bgColor: Color(0xFFF2F2F2),
+                            indicatorColor: Colors.blue,
+                            iconColor: Colors.grey,
+                            iconColorSelected: Colors.blue,
+                            progressIndicatorColor: Colors.blue,
+                            backspaceColor: Colors.blue,
+                            skinToneDialogBgColor: Colors.white,
+                            skinToneIndicatorColor: Colors.grey,
+                            enableSkinTones: true,
+                            showRecentsTab: true,
+                            recentsLimit: 28,
+                            noRecents: Text(
+                              'No Resents',
+                              style: TextStyle(fontSize: 20, color: Colors.black26),
+                              textAlign: TextAlign.center,
+                            ),
+                            tabIndicatorAnimDuration: kTabScrollDuration,
+                            categoryIcons: CategoryIcons(),
+                            buttonMode: ButtonMode.MATERIAL,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+
+
+                  const SizedBox(height: 12,),
+                  InkWell(
+
+                    onTap: (){
+                      //Login(context: context, email: _emailController.text, pass: _passController.text);
+                    },
+
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 52,
+                      width: 250,
+                      decoration:  BoxDecoration(
+                          color: const Color(0xffFF478A),
+                        borderRadius: BorderRadius.circular(25)
+                      ),
+
+                      child: Text('Add Mood',
+                        style: GoogleFonts.roboto(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700,),
+                        textAlign: TextAlign.center,),
+                    ),
+                  )
+                ],
+              ),
+
+            ),
+          );
+        }
+    );
+  }
 }
+
+

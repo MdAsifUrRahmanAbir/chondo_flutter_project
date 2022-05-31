@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
-class NotificationPage extends StatelessWidget {
-  const NotificationPage({Key? key}) : super(key: key);
+class ReportPage extends StatelessWidget {
+  const ReportPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +17,6 @@ class NotificationPage extends StatelessWidget {
         ],
       ),
 
-      appBar: AppBar(
-        elevation: 0,
-        title: Text('Notification',
-          style: GoogleFonts.roboto(fontSize: 25, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
-          textAlign: TextAlign.center,),
-        backgroundColor: Colors.white,
-      ),
-
 
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -34,30 +26,28 @@ class NotificationPage extends StatelessWidget {
                 height: 100,
                 width: double.infinity,
                 margin: const EdgeInsets.only(bottom: 5),
+                padding: const EdgeInsets.all( 8),
+                alignment: Alignment.centerLeft,
 
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: const Color(0xffFF80B3),
                 ),
 
-
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Notification',
+                    Text('Report',
                       style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
                       textAlign: TextAlign.center,),
 
-                    Text('This month your period length is 8 days.',
+                    Text('Please solve this problem...',
                       style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w500,),
                       textAlign: TextAlign.center,),
                   ],
                 ),
-
-
               );
-
             },
             itemCount: 5),
       ),

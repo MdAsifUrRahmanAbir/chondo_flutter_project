@@ -4,12 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LangPage extends StatelessWidget {
+class LangPage extends StatefulWidget {
    LangPage({Key? key}) : super(key: key);
 
+  @override
+  State<LangPage> createState() => _LangPageState();
+}
+
+class _LangPageState extends State<LangPage> {
    final QuestionsController _controller = Get.put(QuestionsController());
 
   dynamic _value = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +67,9 @@ class LangPage extends StatelessWidget {
 
                           onChanged: ( value){
                             _value = value;
+                            setState(() {
+                              
+                            });
                             print(value);
                           },
                       ),
@@ -104,7 +113,13 @@ class LangPage extends StatelessWidget {
                       width: 270,
                       decoration: BoxDecoration(
                         //color: const Color(0xffFB699E),
-                          gradient: const LinearGradient(
+                          gradient: _value ==1? const LinearGradient(
+                            colors: [
+                              Color(0xffC2C2C2),
+                              Color(0xff8C8C8C)
+                            ],
+                            //stops: [0,3,10,0]
+                          ):const LinearGradient(
                             colors: [
                               Color(0xffFF81AF),
                               Color(0xffF12F76)
@@ -125,71 +140,6 @@ class LangPage extends StatelessWidget {
                       )
                   ),
                 ),
-
-
-                // Obx(()=> _value==1? InkWell(
-                //
-                //   onTap: (){
-                //     Navigator.push(context, MaterialPageRoute(builder: (context)=> Question1()));
-                //   },
-                //   child: Container(
-                //       alignment: Alignment.center,
-                //       height: 83,
-                //       width: 270,
-                //       decoration: BoxDecoration(
-                //         //color: const Color(0xffFB699E),
-                //           gradient: const LinearGradient(
-                //             colors: [
-                //               Color(0xffC2C2C2),
-                //               Color(0xff8C8C8C)
-                //             ],
-                //             //stops: [0,3,10,0]
-                //           ),
-                //           borderRadius: BorderRadius.circular(20)
-                //       ),
-                //       child: Row(
-                //         mainAxisSize: MainAxisSize.min,
-                //         children: [
-                //           Text('Continue',
-                //             style: GoogleFonts.roboto(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w700,),
-                //             textAlign: TextAlign.center,),
-                //           const SizedBox(width: 35,),
-                //           const Icon(Icons.arrow_forward_ios, size: 20,color: Colors.white,)
-                //         ],
-                //       )
-                //   ),
-                // ):InkWell(
-                //
-                //   onTap: (){
-                //     Navigator.push(context, MaterialPageRoute(builder: (context)=> Question1()));
-                //   },
-                //   child: Container(
-                //       alignment: Alignment.center,
-                //       height: 83,
-                //       width: 270,
-                //       decoration: BoxDecoration(
-                //         //color: const Color(0xffFB699E),
-                //           gradient: const LinearGradient(
-                //             colors: [
-                //               Color(0xffFF81AF),
-                //               Color(0xffF12F76)
-                //             ],
-                //             //stops: [0,3,10,0]
-                //           ),
-                //           borderRadius: BorderRadius.circular(20)
-                //       ),
-                //       child: Row(
-                //         mainAxisSize: MainAxisSize.min,
-                //         children: [
-                //           Text('Continue',
-                //             style: GoogleFonts.roboto(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w700,),
-                //             textAlign: TextAlign.center,),
-                //           const SizedBox(width: 35,),
-                //           const Icon(Icons.arrow_forward_ios, size: 20,color: Colors.white,)
-                //         ],
-                //       )
-                //   ),
-                // ),)
 
               ],
             ),

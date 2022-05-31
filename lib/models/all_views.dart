@@ -10,7 +10,7 @@ export 'package:chondo_flutter_project/views/questions/question3.dart';
 export 'package:chondo_flutter_project/views/questions/question4.dart';
 export 'package:chondo_flutter_project/views/bottom_nav_pages/bottom_nav.dart';
 export 'package:chondo_flutter_project/views/bottom_nav_pages/home_page.dart';
-export 'package:chondo_flutter_project/views/bottom_nav_pages/calander_page.dart';
+export 'package:chondo_flutter_project/views/bottom_nav_pages/report_page.dart';
 export 'package:chondo_flutter_project/views/bottom_nav_pages/blog_page.dart';
 export 'package:chondo_flutter_project/views/bottom_nav_pages/video_page.dart';
 export 'package:chondo_flutter_project/views/bottom_nav_pages/profile_page.dart';
