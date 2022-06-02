@@ -9,17 +9,23 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
    HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
    final TextEditingController _noteTitleController = TextEditingController();
+
    final TextEditingController _noteBodyController = TextEditingController();
 
-   double _progressValue1 = 16;
-   double _progressValue2 = 8;
-   double _progressValue3 = 8;
+   double _progressValue1 = 45;
 
+   double _progressValue2 = 40;
+
+   double _progressValue3 = 21;
 
    @override
   Widget build(BuildContext context) {
@@ -37,8 +43,8 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.all(18),
-                height: 161,
+                padding: const EdgeInsets.all(18),
+                height: 172,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -55,38 +61,44 @@ class HomePage extends StatelessWidget {
                       style: GoogleFonts.roboto(fontSize: 10, color: const Color(0xff000000), fontWeight: FontWeight.w500,),
                       textAlign: TextAlign.start,),
 
-
-                    const SizedBox(height: 10,),
-
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
                           width: (MediaQuery.of(context).size.width -100)/2,
+                          height: 5,
                           child: LinearProgressIndicator(
-                            backgroundColor: const Color(0xffF74E8B),
-                            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xffFFE9F0)),
-                            value: _progressValue1,
+                            //backgroundColor: const Color(0xffF74E8B),
+                            backgroundColor: const Color(0xffFFE9F0),
+                            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xffF74E8B)),
+                            value: _progressValue1/100,
                           ),
+
+
                         ),
-
-
                         SizedBox(
                           width: (MediaQuery.of(context).size.width -100)/2,
-                          child: LinearProgressIndicator(
-                            backgroundColor: const Color(0xffF47249),
-                            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xffFFE7DF)),
+
+                          child: Slider(
+                            activeColor: const Color(0xffF47249),
+                            inactiveColor: const Color(0xffFFE7DF),
+                            thumbColor: const Color(0xffF74E8B),
+
                             value: _progressValue2,
+                            min: 0,
+                            max: 100,
+                            divisions: 100,
+                            //label: _progressValue2.round().toString(),
+                            onChanged: (double value) {
+                              setState(() {
+                                //_progressValue2 = value;
+                              });
+                            },
                           ),
+
                         ),
-
                       ],
-
-
                     ),
-
-                    const SizedBox(height: 10,),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,7 +106,7 @@ class HomePage extends StatelessWidget {
 
 
                         Container(
-                          height: 35,
+                          height: 30,
                           width: (MediaQuery.of(context).size.width -100)/2,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -116,7 +128,7 @@ class HomePage extends StatelessWidget {
 
 
                         Container(
-                          height: 35,
+                          height: 30,
                           width: (MediaQuery.of(context).size.width -100)/2,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -140,9 +152,7 @@ class HomePage extends StatelessWidget {
 
 
                     ),
-
-                    const SizedBox(height: 10,),
-
+                    const SizedBox(height: 5,),
                     Row(
                       children: [
                         const Icon(Icons.person_rounded, size: 20, color: Color(0xffF74E8B),),
@@ -154,8 +164,6 @@ class HomePage extends StatelessWidget {
                           textAlign: TextAlign.start,),
                       ],
                     )
-
-
                   ],
                 ),
               ),
@@ -174,49 +182,45 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton.icon(onPressed: (){}, icon: const Icon(Icons.edit,color: Colors.black,), label: const Text('Edit', style: TextStyle(color: Colors.black),)),
-                    // SizedBox(
-                    //   height: 300,
-                    //   width: MediaQuery.of(context).size.width - 36,
-                    //   child: ScrollableCleanCalendar(
-                    //     calendarController: calendarController,
-                    //     layout: Layout.BEAUTY,
-                    //     calendarCrossAxisSpacing: 0,
-                    //     daySelectedBackgroundColor: const Color(0xffF74D8B),
-                    //     daySelectedBackgroundColorBetween: const Color(0xffFFC7DB),
-                    //     dayRadius: 20,
-                    //   ),
-                    // ),
 
                     SizedBox(
-
                       height: 305,
-                      //width: 327,
-                      // decoration: BoxDecoration(
-                      //     color: Colors.white,
-                      //     borderRadius: BorderRadius.circular(28)
-                      // ),
-
                       child: TableCalendar(
+
+                        calendarStyle:  CalendarStyle(
+                          selectedDecoration: const BoxDecoration(
+                            color: Color(0xffF74E8B)
+                          ),
+
+                          rangeHighlightColor: const Color(0xffFFC7DB),
+
+                          withinRangeDecoration:  const BoxDecoration(
+                              color: Color(0xffFFC7DB),
+                          ),
+
+
+                          rangeStartDecoration:  BoxDecoration(
+                              color: const Color(0xffF74E8B),
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+
+                          rangeEndDecoration:  BoxDecoration(
+                              color: const Color(0xffF74E8B),
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+
+
+
+
+
+                        ),
+
                         firstDay: DateTime.now().add( const Duration(days: -10)),
                         lastDay: DateTime.now().add(const Duration(days: 30)),
-                        //focusedDay: _selectedDay,
                         rowHeight: 35,
-
                         rangeStartDay: DateTime.now(),
                         rangeEndDay: DateTime.now().add(const Duration(days: 8)),
                         focusedDay: DateTime.now(),
-                        //calendarStyle: ,
-
-
-                        // selectedDayPredicate: (day) {
-                        //   return isSameDay(_selectedDay, day);
-                        // },
-                        // onDaySelected: (selectedDay, focusedDay) {
-                        //   setState(() {
-                        //     _selectedDay = selectedDay;
-                        //     _focusedDay = focusedDay; // update `_focusedDay` here as well
-                        //   });
-                        // },
 
                       ),
                     ),
@@ -363,6 +367,7 @@ class HomePage extends StatelessWidget {
               ),
 
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children:  [
@@ -382,12 +387,12 @@ class HomePage extends StatelessWidget {
                     controller: _noteTitleController,
                     //maxLines: 6,
                     decoration:  InputDecoration(
-                        hintText: 'Enter email or username',
+                        hintText: 'Write title here',
                         hintStyle:  const TextStyle(color: Color(0xff22215B), fontSize: 15),
                         fillColor: Colors.transparent,
                         filled: true,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
+                          borderRadius: BorderRadius.circular(14),
                           borderSide: const BorderSide(width: 2, color: Color(0xff22215B))
                         )
                     ),
@@ -404,7 +409,7 @@ class HomePage extends StatelessWidget {
                     controller: _noteBodyController,
                     maxLines: 8,
                     decoration:  InputDecoration(
-                        hintText: 'Enter email or username',
+                        hintText: 'Write note here',
                         hintStyle:  const TextStyle(color: Color(0xff22215B), fontSize: 15),
                         fillColor: Colors.transparent,
                         filled: true,
@@ -426,7 +431,7 @@ class HomePage extends StatelessWidget {
                     child: Container(
                       alignment: Alignment.center,
                       height: 52,
-                      width: 150,
+                      width: 250,
                       decoration:  BoxDecoration(
                           color: const Color(0xffFF478A),
                         borderRadius: BorderRadius.circular(25)
@@ -445,6 +450,7 @@ class HomePage extends StatelessWidget {
         }
     );
   }
+
   void _createSymptoms(BuildContext context) {
     showDialog(
 
@@ -794,6 +800,7 @@ class HomePage extends StatelessWidget {
         }
     );
   }
+
   void _emojiPicker(BuildContext context) {
     showDialog(
 
@@ -805,8 +812,8 @@ class HomePage extends StatelessWidget {
             elevation: 1,
             child: Container(
               padding: const EdgeInsets.all(12),
-              height: 500,
-              width: 290,
+              height: 600,
+              width: 310,
               decoration: BoxDecoration(
                 color: const Color(0xffFFFFFF).withOpacity(.8),
                 borderRadius: BorderRadius.circular(27),
@@ -834,45 +841,380 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: 17,),
 
                   SizedBox(
-                    height: 260,
+                    height: 370,
 
                     child: ListView(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       children: [
-                        EmojiPicker(
-                          onEmojiSelected: (category, emoji) {
-                            // Do something when emoji is tapped
-                          },
-                          onBackspacePressed: () {
-                            // Backspace-Button tapped logic
-                            // Remove this line to also remove the button in the UI
-                          },
-                          config: const Config(
-                            columns: 7,
-                            emojiSizeMax: 32,
-                            verticalSpacing: 0,
-                            horizontalSpacing: 0,
-                            initCategory: Category.RECENT,
-                            bgColor: Color(0xFFF2F2F2),
-                            indicatorColor: Colors.blue,
-                            iconColor: Colors.grey,
-                            iconColorSelected: Colors.blue,
-                            progressIndicatorColor: Colors.blue,
-                            backspaceColor: Colors.blue,
-                            skinToneDialogBgColor: Colors.white,
-                            skinToneIndicatorColor: Colors.grey,
-                            enableSkinTones: true,
-                            showRecentsTab: true,
-                            recentsLimit: 28,
-                            noRecents: Text(
-                              'No Resents',
-                              style: TextStyle(fontSize: 20, color: Colors.black26),
-                              textAlign: TextAlign.center,
-                            ),
-                            tabIndicatorAnimDuration: kTabScrollDuration,
-                            categoryIcons: CategoryIcons(),
-                            buttonMode: ButtonMode.MATERIAL,
+                        SizedBox(
+                          height: 65,
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/inlove.png')
+                                    ),
+                                    Text('In Love',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/happy.png')
+                                    ),
+                                    Text('Happy',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/flirty.png')
+                                    ),
+                                    Text('Flirty',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/blassed.png')
+                                    ),
+
+                                    Text('Blessed',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 65,
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/annoyed.png')
+                                    ),
+                                    Text('Annoyed',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/angry.png')
+                                    ),
+                                    Text('Angry',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/anxious.png')
+                                    ),
+                                    Text('Anxious',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/furious.png')
+                                    ),
+
+                                    Text('Furious',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 65,
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/bored.png')
+                                    ),
+                                    Text('Bored',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/confused.png')
+                                    ),
+                                    Text('Confused',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/goofy.png')
+                                    ),
+                                    Text('Goofy',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/sleepy.png')
+                                    ),
+
+                                    Text('Sleepy',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 65,
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 68,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/sad.png')
+                                    ),
+                                    Text('Sad',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 68,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/depressed.png')
+                                    ),
+                                    Text('Depressed',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 68,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/scared.png')
+                                    ),
+                                    Text('Scared',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 68,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/lonly.png')
+                                    ),
+
+                                    Text('Lonly',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 65,
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 80,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/mischievous.png')
+                                    ),
+                                    Text('Mischievous',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/cool.png')
+                                    ),
+                                    Text('Cool',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/surprised.png')
+                                    ),
+                                    Text('Surprised',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){
+
+                                        },
+                                        icon: Image.asset('assets/emojis/sevil.png')
+                                    ),
+
+                                    Text('Evil',
+                                      style: GoogleFonts.roboto(fontSize: 14, color: const Color(0xffFF3980), fontWeight: FontWeight.w400,),
+                                      textAlign: TextAlign.center,),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 import 'package:horizontal_picker/horizontal_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Question1 extends StatefulWidget {
   const Question1({Key? key}) : super(key: key);
@@ -12,6 +13,19 @@ class Question1 extends StatefulWidget {
 }
 
 class _Question1State extends State<Question1> {
+
+  load() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+     pref.getDouble('q1');
+  }
+
+  set() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setDouble('q1', hPickerValue);
+  }
+
+  var hPickerValue = 5.0;
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldGradientBackground(
@@ -52,7 +66,7 @@ class _Question1State extends State<Question1> {
 
 
               const SizedBox(height: 28,),
-              Text('5',
+              Text(hPickerValue.toString(),
                 style: GoogleFonts.roboto(fontSize: 30, color: const Color(0xffF74D8B), fontWeight: FontWeight.w700,),
                 textAlign: TextAlign.center,),
               const SizedBox(height: 8,),
@@ -68,6 +82,9 @@ class _Question1State extends State<Question1> {
                 passiveItemsTextColor: const Color(0xffF74D8B),
                 onChanged: (value) {
 
+                  setState(() {
+                    hPickerValue= value;
+                  });
                 },
                 height: 120,
               ),

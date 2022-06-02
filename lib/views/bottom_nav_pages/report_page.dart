@@ -17,7 +17,6 @@ class ReportPage extends StatelessWidget {
         ],
       ),
 
-
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: ListView.builder(
@@ -26,28 +25,35 @@ class ReportPage extends StatelessWidget {
                 height: 100,
                 width: double.infinity,
                 margin: const EdgeInsets.only(bottom: 5),
-                padding: const EdgeInsets.all( 8),
-                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.all( 15),
 
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: const Color(0xffFF80B3),
+                    borderRadius: BorderRadius.circular(8),
+                    color: const Color(0xffFFE9F0),
+                    border: Border.all(
+                        width: .5,
+                        color: const Color(0xffF74E8B)
+                    )
                 ),
+
 
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Report',
-                      style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                    Text('Notification',
+                      style: GoogleFonts.roboto(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w700,),
                       textAlign: TextAlign.center,),
 
-                    Text('Please solve this problem...',
-                      style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff22215B), fontWeight: FontWeight.w500,),
+                    Text('This month your period length is 8 days.',
+                      style: GoogleFonts.roboto(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400,),
                       textAlign: TextAlign.center,),
                   ],
                 ),
+
+
               );
+
             },
             itemCount: 5),
       ),

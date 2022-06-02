@@ -6,15 +6,17 @@ class VideoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SizedBox(
-          width: double.infinity,
-          // Define Webview Widget
-          child: WebView(
-            initialUrl: 'https://www.youtube.com/channel/UCJ3sW_6kBDZqDRGAqPQg8NA',
-            // Enable Javascript on WebView
-            javascriptMode: JavascriptMode.unrestricted,
-          )),
+    return const SafeArea(
+      child:  Scaffold(
+        body: SizedBox(
+            width: double.infinity,
+            // Define Webview Widget
+            child: WebView(
+              initialUrl: 'https://www.youtube.com/channel/UCJ3sW_6kBDZqDRGAqPQg8NA',
+              // Enable Javascript on WebView
+              javascriptMode: JavascriptMode.unrestricted,
+            )),
+      ),
     );
   }
 }
