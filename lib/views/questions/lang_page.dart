@@ -1,6 +1,4 @@
-import 'package:chondo_flutter_project/controllers/questions_controller.dart';
 import 'package:chondo_flutter_project/models/all_views.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

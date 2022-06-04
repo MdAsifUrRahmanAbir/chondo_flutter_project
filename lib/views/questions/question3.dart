@@ -1,22 +1,17 @@
+import 'package:chondo_flutter_project/models/all_coltroller.dart';
 import 'package:chondo_flutter_project/models/all_views.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 
-class Question3 extends StatefulWidget {
-  const Question3({Key? key}) : super(key: key);
+class Question3 extends StatelessWidget {
+   Question3({Key? key}) : super(key: key);
 
-  @override
-  _Question3State createState() => _Question3State();
-}
-
-class _Question3State extends State<Question3> {
-
-  DateTime _selectedDay = DateTime.now();
-
+  final QuestionsController _controller = Get.put(QuestionsController());
 
   @override
   Widget build(BuildContext context) {
@@ -77,36 +72,36 @@ class _Question3State extends State<Question3> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
 
 
-                 child: TableCalendar(
+                 child: Obx(() => TableCalendar(
 
-                   calendarStyle:  CalendarStyle(
-                       selectedDecoration: BoxDecoration(
-                           color: const Color(0xffF74E8B),
-                         borderRadius: BorderRadius.circular(20)
-                       ),
-
-                     todayDecoration: const BoxDecoration(
-                         color: Colors.white,
+                   calendarStyle:  const CalendarStyle(
+                     selectedDecoration: BoxDecoration(
+                         color: Color(0xffF74E8B),
+                         //borderRadius: BorderRadius.circular(13)
+                       shape: BoxShape.circle
                      ),
 
-                     todayTextStyle: const TextStyle(color: Colors.black),
+                     todayDecoration: BoxDecoration(
+                       color: Colors.white,
+                     ),
+
+                     todayTextStyle: TextStyle(color: Colors.black),
                    ),
 
                    firstDay: DateTime.now().add( const Duration(days: -30)),
                    lastDay: DateTime.now().add(const Duration(days: 30)),
-                   focusedDay: _selectedDay,
+                   focusedDay: _controller.lastPeriodStartDate.value,
                    rowHeight: 40,
                    selectedDayPredicate: (day) {
-                     return isSameDay(_selectedDay, day);
+                     return isSameDay(_controller.lastPeriodStartDate.value, day);
                    },
                    onDaySelected: (selectedDay, focusedDay) {
-                     setState(() {
-                         _selectedDay = selectedDay;
-                       // _focusedDay = focusedDay; // update `_focusedDay` here as well
-                     });
+
+                     _controller.lastPeriodStartDate.value = selectedDay;
+
                    },
 
-                 )
+                 ))
 
                 ),
               ),
@@ -115,6 +110,7 @@ class _Question3State extends State<Question3> {
               const SizedBox(height: 38,),
               InkWell(
                 onTap: (){
+                  print(_controller.lastPeriodStartDate.value);
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Question4()));
                 },
                 child: Container(

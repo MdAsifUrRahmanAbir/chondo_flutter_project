@@ -1,24 +1,17 @@
-import 'dart:io';
-
+import 'package:chondo_flutter_project/models/all_coltroller.dart';
 import 'package:chondo_flutter_project/widgets/my_flutter_app_icons.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
    HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
    final TextEditingController _noteTitleController = TextEditingController();
-
    final TextEditingController _noteBodyController = TextEditingController();
 
    double _progressValue1 = 45;
@@ -27,8 +20,15 @@ class _HomePageState extends State<HomePage> {
 
    double _progressValue3 = 21;
 
+   final QuestionsController _controller = Get.put(QuestionsController());
+
+
    @override
   Widget build(BuildContext context) {
+
+     print(_controller.periodLength.value);
+     print(_controller.cycleLength.value);
+     print(_controller.lastPeriodStartDate.value);
 
 
 
@@ -90,9 +90,7 @@ class _HomePageState extends State<HomePage> {
                             divisions: 100,
                             //label: _progressValue2.round().toString(),
                             onChanged: (double value) {
-                              setState(() {
-                                //_progressValue2 = value;
-                              });
+
                             },
                           ),
 
@@ -187,39 +185,40 @@ class _HomePageState extends State<HomePage> {
                       height: 305,
                       child: TableCalendar(
 
-                        calendarStyle:  CalendarStyle(
-                          selectedDecoration: const BoxDecoration(
+                        calendarStyle:  const CalendarStyle(
+                          selectedDecoration: BoxDecoration(
                             color: Color(0xffF74E8B)
                           ),
 
-                          rangeHighlightColor: const Color(0xffFFC7DB),
+                          rangeHighlightColor: Color(0xffFFC7DB),
 
-                          withinRangeDecoration:  const BoxDecoration(
+                          withinRangeDecoration:  BoxDecoration(
                               color: Color(0xffFFC7DB),
                           ),
 
 
                           rangeStartDecoration:  BoxDecoration(
-                              color: const Color(0xffF74E8B),
-                            borderRadius: BorderRadius.circular(20)
+                              color: Color(0xffF74E8B),
+                              shape: BoxShape.circle
                           ),
 
                           rangeEndDecoration:  BoxDecoration(
-                              color: const Color(0xffF74E8B),
-                              borderRadius: BorderRadius.circular(20)
+                              color: Color(0xffF74E8B),
+                              shape: BoxShape.circle
+                          ),
+                          todayDecoration: BoxDecoration(
+                            color: Colors.white,
                           ),
 
-
-
-
+                          todayTextStyle: TextStyle(color: Colors.black),
 
                         ),
 
-                        firstDay: DateTime.now().add( const Duration(days: -10)),
+                        firstDay: DateTime.now().add( const Duration(days: -30)),
                         lastDay: DateTime.now().add(const Duration(days: 30)),
                         rowHeight: 35,
-                        rangeStartDay: DateTime.now(),
-                        rangeEndDay: DateTime.now().add(const Duration(days: 8)),
+                        rangeStartDay: _controller.lastPeriodStartDate.value,
+                        rangeEndDay: _controller.lastPeriodStartDate.value.add( Duration(days: _controller.periodLength.value.toInt())),
                         focusedDay: DateTime.now(),
 
                       ),
