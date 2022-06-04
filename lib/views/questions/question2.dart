@@ -1,18 +1,20 @@
+import 'package:chondo_flutter_project/models/all_coltroller.dart';
 import 'package:chondo_flutter_project/models/all_views.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 import 'package:horizontal_picker/horizontal_picker.dart';
 
-class Question2 extends StatefulWidget {
-  const Question2({Key? key}) : super(key: key);
+class Question2 extends StatelessWidget {
+   Question2({Key? key}) : super(key: key);
 
-  @override
-  _Question2State createState() => _Question2State();
-}
 
-class _Question2State extends State<Question2> {
-  @override
+  final QuestionsController _controller = Get.put(QuestionsController());
+
+
+
+   @override
   Widget build(BuildContext context) {
     return ScaffoldGradientBackground(
       gradient: const LinearGradient(
@@ -52,9 +54,9 @@ class _Question2State extends State<Question2> {
 
 
               const SizedBox(height: 28,),
-              Text('28',
+              Obx(()=> Text(_controller.cycleLength.value.toString(),
                 style: GoogleFonts.roboto(fontSize: 30, color: const Color(0xffF74D8B), fontWeight: FontWeight.w700,),
-                textAlign: TextAlign.center,),
+                textAlign: TextAlign.center,),),
               const SizedBox(height: 8,),
               HorizontalPicker(
                 //initialPosition: ,
@@ -68,6 +70,7 @@ class _Question2State extends State<Question2> {
                 passiveItemsTextColor: const Color(0xffF74D8B),
                 onChanged: (value) {
 
+                  _controller.cycleLength.value = value;
                 },
                 height: 120,
               ),
@@ -75,6 +78,7 @@ class _Question2State extends State<Question2> {
 
               InkWell(
                 onTap: (){
+                  print(_controller.cycleLength.value);
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> Question3()));
                 },
                 child: Container(

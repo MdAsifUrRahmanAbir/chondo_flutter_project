@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 import 'package:horizontal_picker/horizontal_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../controllers/questions_controller.dart';
 
 class Question4 extends StatefulWidget {
   const Question4({Key? key}) : super(key: key);
@@ -14,8 +17,17 @@ class Question4 extends StatefulWidget {
 }
 
 class _Question4State extends State<Question4> {
+
+
+  QuestionsController con = QuestionsController();
+
+
   @override
   Widget build(BuildContext context) {
+
+    con.set(true);
+    goToBottom(context);
+
     return ScaffoldGradientBackground(
       gradient: const LinearGradient(
         begin: Alignment.topCenter,
@@ -26,24 +38,19 @@ class _Question4State extends State<Question4> {
         ],
       ),
 
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      //   shadowColor: Colors.transparent,
-      //   leading: const Icon(Icons.arrow_back, color: Colors.black, size: 24),
-      // ),
       body: Center(
-        child: InkWell(
-          onTap: () async{
-
-            // await FirebaseAuth.instance.signOut();
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNav()));
-          },
-          child: Text('Analyzing ',
-            style: GoogleFonts.roboto(fontSize: 30, color: Colors.white, fontWeight: FontWeight.w700,),
-            textAlign: TextAlign.center,),
-        ),
+        child: Text('Analyzing ',
+          style: GoogleFonts.roboto(fontSize: 30, color: Colors.white, fontWeight: FontWeight.w700,),
+          textAlign: TextAlign.center,),
       )
     );
   }
+
+  goToBottom(BuildContext context) async{
+
+    await Future.delayed(const Duration(seconds: 3));
+    con.set(true);
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNav()));
+  }
+
 }

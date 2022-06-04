@@ -30,4 +30,6 @@ class MyFlutterApp {
   static const IconData settings = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData x_circle = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData loadingbaricon = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData rating = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData rattingfilled = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

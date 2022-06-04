@@ -1,17 +1,17 @@
 import 'package:chondo_flutter_project/models/all_views.dart';
+import 'package:chondo_flutter_project/models/all_coltroller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 import 'package:horizontal_picker/horizontal_picker.dart';
 
-class Question1 extends StatefulWidget {
-  const Question1({Key? key}) : super(key: key);
+ class Question1 extends StatelessWidget {
 
-  @override
-  _Question1State createState() => _Question1State();
-}
 
-class _Question1State extends State<Question1> {
+  final QuestionsController _controller = Get.put(QuestionsController());
+
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldGradientBackground(
@@ -52,12 +52,12 @@ class _Question1State extends State<Question1> {
 
 
               const SizedBox(height: 28,),
-              Text('5',
+              Obx(()=> Text(_controller.periodLength.value.toString(),
                 style: GoogleFonts.roboto(fontSize: 30, color: const Color(0xffF74D8B), fontWeight: FontWeight.w700,),
-                textAlign: TextAlign.center,),
+                textAlign: TextAlign.center,),),
               const SizedBox(height: 8,),
               HorizontalPicker(
-                //initialPosition: ,
+                //initialPosition: _controller.periodLength.value,
                 minValue: 2,
                 maxValue: 7,
                 divisions: 5,
@@ -68,13 +68,17 @@ class _Question1State extends State<Question1> {
                 passiveItemsTextColor: const Color(0xffF74D8B),
                 onChanged: (value) {
 
+                    _controller.periodLength.value= value;
                 },
                 height: 120,
+
+
               ),
               const SizedBox(height: 60,),
 
               InkWell(
                 onTap: (){
+                  print(_controller.periodLength.value);
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>Question2() ));
                 },
                 child: Container(
@@ -143,4 +147,5 @@ vary from about 2 to 7 days.
       ),
     );
   }
+
 }

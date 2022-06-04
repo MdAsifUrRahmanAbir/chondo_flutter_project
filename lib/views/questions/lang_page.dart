@@ -1,17 +1,49 @@
-import 'package:chondo_flutter_project/controllers/questions_controller.dart';
 import 'package:chondo_flutter_project/models/all_views.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LangPage extends StatelessWidget {
+class LangPage extends StatefulWidget {
    LangPage({Key? key}) : super(key: key);
 
-   final QuestionsController _controller = Get.put(QuestionsController());
+  @override
+  State<LangPage> createState() => _LangPageState();
 
+}
+
+class _LangPageState extends State<LangPage> {
   dynamic _value = 1;
+
+  late Future <bool> b ;
+  final Future <SharedPreferences> preff = SharedPreferences.getInstance();
+
+
+  set() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setBool('bl', true);
+  }
+
+  @override
+  void initState() {
+
+    b = preff.then((SharedPreferences prefs) {
+      return prefs.getBool('bl')!;
+    });
+
+    // TODO: implement initState
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
+    if(b==true){
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => BottomNav()));
+    }
+
     return Scaffold(
 
         body: Container(
@@ -29,41 +61,81 @@ class LangPage extends StatelessWidget {
                 const SizedBox(height: 200,),
 
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  alignment: Alignment.center,
-                  width: 200,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  alignment: Alignment.bottomCenter,
+                  width: 270,
+                  height: 40,
                   decoration: BoxDecoration(
-                      color: Colors.redAccent.withOpacity(.1),
+                      color: const Color(0xffFFDBE8),
                       borderRadius: BorderRadius.circular(28),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     //mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset('assets/logos/language.png'),
                       //const Spacer(),
-                      DropdownButton(
-                          value: _value,
-                          items:  [
-                            DropdownMenuItem(
-                              child: Text("Select Language", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
-                              value: 1,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("English", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
-                              value: 2,
-                            ),
-                            DropdownMenuItem(
-                              child: Text("Bangla", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
-                              value: 3,
-                            )
-                          ],
 
-                          onChanged: ( value){
-                            _value = value;
-                            print(value);
-                          },
+
+                      DropdownButton(
+                        alignment: Alignment.bottomLeft,
+                        dropdownColor: const Color(0xffFFDBE8),
+                        iconSize: 0,
+                        borderRadius: BorderRadius.circular(28),
+                        value: _value,
+                        items:   [
+                          DropdownMenuItem(
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: 200,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: const Color(0xffFFDBE8),
+                                borderRadius: BorderRadius.circular(28),
+                              ),
+                              child: const Text(
+                                "Select Language",
+                                style: TextStyle(color: Color(0xffFB699E)),textAlign: TextAlign.center,),
+                            ),
+                              value: 1,
+                          ),
+                          DropdownMenuItem(
+                            child: Container(
+                                alignment: Alignment.center,
+                                width: 200,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffFFDBE8),
+                                  borderRadius: BorderRadius.circular(28),
+                                ),
+                                child: const Text("English", style: TextStyle(color:  Color(0xffFB699E)),textAlign: TextAlign.center,)),
+                            value: 2,
+                          ),
+                          DropdownMenuItem(
+                            child: Container(
+                                alignment: Alignment.center,
+                                width: 200,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffFFDBE8),
+                                  borderRadius: BorderRadius.circular(28),
+                                ),
+                                child: const Text("Bengali", style: TextStyle(color:  Color(0xffFB699E)),textAlign: TextAlign.center,)),
+                            value: 3,
+                          )
+                        ],
+
+                        onChanged: ( value){
+                          _value = value;
+                          setState(() {
+
+                          });
+                          print(value);
+                        },
                       ),
+
+                      const Icon(Icons.keyboard_arrow_down_outlined, color: Color(0xffFB699E),)
+
                     ],
                   )
                 ),
@@ -96,7 +168,10 @@ class LangPage extends StatelessWidget {
                 InkWell(
 
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> Question1()));
+                    set();
+                    if(_value!=1){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Question1()));
+                    }
                   },
                   child: Container(
                       alignment: Alignment.center,
@@ -104,7 +179,13 @@ class LangPage extends StatelessWidget {
                       width: 270,
                       decoration: BoxDecoration(
                         //color: const Color(0xffFB699E),
-                          gradient: const LinearGradient(
+                          gradient: _value ==1? const LinearGradient(
+                            colors: [
+                              Color(0xffC2C2C2),
+                              Color(0xff8C8C8C)
+                            ],
+                            //stops: [0,3,10,0]
+                          ):const LinearGradient(
                             colors: [
                               Color(0xffFF81AF),
                               Color(0xffF12F76)
@@ -125,71 +206,6 @@ class LangPage extends StatelessWidget {
                       )
                   ),
                 ),
-
-
-                // Obx(()=> _value==1? InkWell(
-                //
-                //   onTap: (){
-                //     Navigator.push(context, MaterialPageRoute(builder: (context)=> Question1()));
-                //   },
-                //   child: Container(
-                //       alignment: Alignment.center,
-                //       height: 83,
-                //       width: 270,
-                //       decoration: BoxDecoration(
-                //         //color: const Color(0xffFB699E),
-                //           gradient: const LinearGradient(
-                //             colors: [
-                //               Color(0xffC2C2C2),
-                //               Color(0xff8C8C8C)
-                //             ],
-                //             //stops: [0,3,10,0]
-                //           ),
-                //           borderRadius: BorderRadius.circular(20)
-                //       ),
-                //       child: Row(
-                //         mainAxisSize: MainAxisSize.min,
-                //         children: [
-                //           Text('Continue',
-                //             style: GoogleFonts.roboto(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w700,),
-                //             textAlign: TextAlign.center,),
-                //           const SizedBox(width: 35,),
-                //           const Icon(Icons.arrow_forward_ios, size: 20,color: Colors.white,)
-                //         ],
-                //       )
-                //   ),
-                // ):InkWell(
-                //
-                //   onTap: (){
-                //     Navigator.push(context, MaterialPageRoute(builder: (context)=> Question1()));
-                //   },
-                //   child: Container(
-                //       alignment: Alignment.center,
-                //       height: 83,
-                //       width: 270,
-                //       decoration: BoxDecoration(
-                //         //color: const Color(0xffFB699E),
-                //           gradient: const LinearGradient(
-                //             colors: [
-                //               Color(0xffFF81AF),
-                //               Color(0xffF12F76)
-                //             ],
-                //             //stops: [0,3,10,0]
-                //           ),
-                //           borderRadius: BorderRadius.circular(20)
-                //       ),
-                //       child: Row(
-                //         mainAxisSize: MainAxisSize.min,
-                //         children: [
-                //           Text('Continue',
-                //             style: GoogleFonts.roboto(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w700,),
-                //             textAlign: TextAlign.center,),
-                //           const SizedBox(width: 35,),
-                //           const Icon(Icons.arrow_forward_ios, size: 20,color: Colors.white,)
-                //         ],
-                //       )
-                //   ),
-                // ),)
 
               ],
             ),

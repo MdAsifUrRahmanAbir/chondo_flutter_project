@@ -217,7 +217,7 @@ class ProfilePage extends StatelessWidget {
 
               ),
 
-              SizedBox(height: 17,),
+              const SizedBox(height: 17,),
 
               Text('My Notes',
                 style: GoogleFonts.roboto(fontSize: 30, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
@@ -261,18 +261,37 @@ class ProfilePage extends StatelessWidget {
                     itemCount: 5),
               ),
 
+              const SizedBox(height: 17,),
+
+              Text('Your Privilege',
+                style: GoogleFonts.roboto(fontSize: 30, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                textAlign: TextAlign.start,),
+
+              const SizedBox(height: 5,),
+
+              Text('Your privileges will show here soon.',
+                style: GoogleFonts.roboto(fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w400,),
+                textAlign: TextAlign.start,),
+
 
               const SizedBox(height: 20,),
 
-              TextButton.icon(
-                  onPressed: () async{
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
-                  },
-                  icon: const Icon(Icons.logout, color: Color(0xFFBC6484),),
-                  label: Text('LOGOUT ',
-                    style: GoogleFonts.roboto(fontSize: 30, color: const Color(0xFFBC6484), fontWeight: FontWeight.w700,),
-                    textAlign: TextAlign.center,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+
+                  TextButton.icon(
+                      onPressed: () async{
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+                      },
+                      icon: const Icon(Icons.logout),
+                      label: Text('LOGOUT ',
+                        style: GoogleFonts.roboto(fontSize: 25, fontWeight: FontWeight.w700,),
+                        textAlign: TextAlign.center,),
+                  ),
+                ],
               )
             ],
           ),

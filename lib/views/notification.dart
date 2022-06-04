@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
-class NotificationPage extends StatelessWidget {
+class NotificationPage extends StatefulWidget {
   const NotificationPage({Key? key}) : super(key: key);
+
+  @override
+  State<NotificationPage> createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends State<NotificationPage> {
+
+   List<bool>? _isRead;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +27,7 @@ class NotificationPage extends StatelessWidget {
 
       appBar: AppBar(
         elevation: 0,
+        centerTitle: true,
         title: Text('Notification',
           style: GoogleFonts.roboto(fontSize: 25, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
           textAlign: TextAlign.center,),
@@ -30,16 +39,47 @@ class NotificationPage extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: ListView.builder(
             itemBuilder: (context, index){
-              return Container(
-                height: 100,
-                width: double.infinity,
-                margin: const EdgeInsets.only(bottom: 5),
 
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: const Color(0xffFF80B3),
+              return InkWell(
+                onTap: (){
+
+                  setState(() {
+
+                  });
+                },
+                child: Container(
+                  height: 100,
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(bottom: 5),
+                  padding: const EdgeInsets.all( 15),
+
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: const Color(0xffFFE9F0),
+                    border: Border.all(
+                      width: .5,
+                      color:  const Color(0xffF74E8B)//:const Color(0xffFFE9F0)
+                    )
+                  ),
+
+
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text( "Read",
+                        style: GoogleFonts.roboto(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w700,),
+                        textAlign: TextAlign.center,),
+
+                      Text('This month your period length is 8 days.',
+                        style: GoogleFonts.roboto(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400,),
+                        textAlign: TextAlign.center,),
+                    ],
+                  ),
+
                 ),
               );
+
             },
             itemCount: 5),
       ),

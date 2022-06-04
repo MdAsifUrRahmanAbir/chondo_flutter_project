@@ -21,7 +21,7 @@ class _BottomNavState extends State<BottomNav> {
   String now = DateFormat('dd').format(DateTime.now());
 
   final List _pages = [
-    CalanderPage(),
+    ReportPage(),
     BlogPage(),
     HomePage(),
     VideoPage(),
@@ -32,7 +32,7 @@ class _BottomNavState extends State<BottomNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFFF3F8),
-      appBar: AppBar(
+      appBar: currentPage == 3? null: AppBar(
         shadowColor: Colors.transparent,
         backgroundColor: Colors.white,
         title: Text(now, style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xffF74D8B), fontWeight: FontWeight.w700,),
@@ -44,13 +44,13 @@ class _BottomNavState extends State<BottomNav> {
             Navigator.push(context, MaterialPageRoute(builder: (context)=> Settings()));
           },
 
-          ),
+        ),
         actions:  [
           IconButton(
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>  NotificationPage()));
-              },
-              icon:const Icon(MyFlutterApp.bell, color: Color(0xffFF357D),),
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>  NotificationPage()));
+            },
+            icon:const Icon(MyFlutterApp.bell, color: Color(0xffFF357D),),
 
           ),
           const SizedBox(width: 10,)

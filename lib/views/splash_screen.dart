@@ -1,11 +1,17 @@
 import 'package:chondo_flutter_project/models/all_views.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../controllers/questions_controller.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+   SplashScreen({Key? key}) : super(key: key);
 
-  @override
+   QuestionsController con = QuestionsController();
+
+
+   @override
   Widget build(BuildContext context) {
     gotohome( context);
     return Scaffold(
@@ -23,10 +29,18 @@ class SplashScreen extends StatelessWidget {
 
 
   Future gotohome(BuildContext context) async {
+
     await Future.delayed(const Duration(seconds: 3));
     if(FirebaseAuth.instance.currentUser != null){
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LangPage()));
+
+      if(con.load()==true){
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => BottomNav()));
+      }else{
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LangPage()));
+      }
+
     }else {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
