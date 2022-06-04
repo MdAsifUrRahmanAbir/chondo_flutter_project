@@ -1,6 +1,5 @@
 import 'package:chondo_flutter_project/models/all_coltroller.dart';
 import 'package:chondo_flutter_project/widgets/my_flutter_app_icons.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,20 +14,28 @@ class HomePage extends StatelessWidget {
    final TextEditingController _noteBodyController = TextEditingController();
 
    double _progressValue1 = 45;
-
    double _progressValue2 = 40;
-
    double _progressValue3 = 21;
 
    final QuestionsController _controller = Get.put(QuestionsController());
+   //dynamic data = _controller.loadData().;
+
+   int month = DateTime.now().month;
+   List months = ['January', 'February', 'March', 'April', 'May','June','July','August','September','October','November','December'];
+   int now = DateTime.now().day;
 
 
    @override
   Widget build(BuildContext context) {
+     _controller.loadData();
+
 
      print(_controller.periodLength.value);
      print(_controller.cycleLength.value);
      print(_controller.lastPeriodStartDate.value);
+     print(_controller.dataMap['firstName']);
+     print(_controller.dataMap['secondName']);
+
 
 
 
@@ -47,14 +54,14 @@ class HomePage extends StatelessWidget {
                 height: 172,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(28)
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(28)
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('16th Day of Cycle',
+                    Text('${_controller.dataMap['firstName']}',
                       style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff000000), fontWeight: FontWeight.w700,),
                       textAlign: TextAlign.start,),
                     Text('High Chances of Getting Pregnant',
@@ -141,8 +148,8 @@ class HomePage extends StatelessWidget {
                           ),
 
                           decoration: BoxDecoration(
-                            color: const Color(0xffFFE7DF),
-                            borderRadius: BorderRadius.circular(7)
+                              color: const Color(0xffFFE7DF),
+                              borderRadius: BorderRadius.circular(7)
                           ),
                         ),
 
@@ -187,13 +194,13 @@ class HomePage extends StatelessWidget {
 
                         calendarStyle:  const CalendarStyle(
                           selectedDecoration: BoxDecoration(
-                            color: Color(0xffF74E8B)
+                              color: Color(0xffF74E8B)
                           ),
 
                           rangeHighlightColor: Color(0xffFFC7DB),
 
                           withinRangeDecoration:  BoxDecoration(
-                              color: Color(0xffFFC7DB),
+                            color: Color(0xffFFC7DB),
                           ),
 
 
@@ -238,100 +245,100 @@ class HomePage extends StatelessWidget {
                     textAlign: TextAlign.start,),
 
                   FloatingActionButton(
-                      onPressed: (){
-                        showDialog(
+                    onPressed: (){
+                      showDialog(
 
-                            context: context,
-                            builder: (context){
-                              return Dialog(
-                                alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, .5),
-                                backgroundColor: Colors.transparent,
-                                elevation: 1,
-                                child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  height: 255,
-                                  width: 290,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffFFFFFF).withOpacity(.8),
-                                    borderRadius: BorderRadius.circular(27),
-                                  ),
-
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children:  [
-                                          const Spacer(),
-                                          Image.asset('assets/logos/xcircle.png')
-                                        ],
-                                      ),
-
-                                      const SizedBox(height: 10,),
-                                      InkWell(
-                                        onTap: (){
-                                          _createNote(context);
-                                        },
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          height: 54,
-                                          width: 265,
-                                          decoration: BoxDecoration(
-                                              color: Colors.transparent,
-                                              borderRadius: BorderRadius.circular(25),
-                                              border: Border.all(width: 2, color: const Color(0xff22215B))
-                                          ),
-                                          child: Text('Create Note',
-                                            style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
-                                            textAlign: TextAlign.center,),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10,),
-                                      InkWell(
-
-                                        onTap: (){
-                                          _emojiPicker(context);
-                                        },
-
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          height: 54,
-                                          width: 265,
-                                          decoration: BoxDecoration(
-                                              color: Colors.transparent,
-                                              borderRadius: BorderRadius.circular(25),
-                                              border: Border.all(width: 2, color: const Color(0xff22215B))
-                                          ),
-                                          child: Text('Add Mood',
-                                            style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
-                                            textAlign: TextAlign.center,),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10,),
-                                      InkWell(
-                                        onTap: (){
-                                          _createSymptoms(context);
-                                        },
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          height: 54,
-                                          width: 265,
-                                          decoration: BoxDecoration(
-                                              color: Colors.transparent,
-                                              borderRadius: BorderRadius.circular(25),
-                                              border: Border.all(width: 2, color: const Color(0xff22215B))
-                                          ),
-                                          child: Text('Add Symptoms',
-                                            style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
-                                            textAlign: TextAlign.center,),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
+                          context: context,
+                          builder: (context){
+                            return Dialog(
+                              alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, .5),
+                              backgroundColor: Colors.transparent,
+                              elevation: 1,
+                              child: Container(
+                                padding: const EdgeInsets.all(12),
+                                height: 255,
+                                width: 290,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffFFFFFF).withOpacity(.8),
+                                  borderRadius: BorderRadius.circular(27),
                                 ),
-                              );
-                            }
-                        );
-                      },
+
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children:  [
+                                        const Spacer(),
+                                        Image.asset('assets/logos/xcircle.png')
+                                      ],
+                                    ),
+
+                                    const SizedBox(height: 10,),
+                                    InkWell(
+                                      onTap: (){
+                                        _createNote(context);
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        height: 54,
+                                        width: 265,
+                                        decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius: BorderRadius.circular(25),
+                                            border: Border.all(width: 2, color: const Color(0xff22215B))
+                                        ),
+                                        child: Text('Create Note',
+                                          style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                                          textAlign: TextAlign.center,),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10,),
+                                    InkWell(
+
+                                      onTap: (){
+                                        _emojiPicker(context);
+                                      },
+
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        height: 54,
+                                        width: 265,
+                                        decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius: BorderRadius.circular(25),
+                                            border: Border.all(width: 2, color: const Color(0xff22215B))
+                                        ),
+                                        child: Text('Add Mood',
+                                          style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                                          textAlign: TextAlign.center,),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10,),
+                                    InkWell(
+                                      onTap: (){
+                                        _createSymptoms(context);
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        height: 54,
+                                        width: 265,
+                                        decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius: BorderRadius.circular(25),
+                                            border: Border.all(width: 2, color: const Color(0xff22215B))
+                                        ),
+                                        child: Text('Add Symptoms',
+                                          style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
+                                          textAlign: TextAlign.center,),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                              ),
+                            );
+                          }
+                      );
+                    },
                     backgroundColor: const Color(0xff212057),
                     child: const Icon(Icons.add,color: Colors.white,),
                   )
@@ -342,7 +349,7 @@ class HomePage extends StatelessWidget {
 
             ],
           ),
-        ),
+        )
       ),
     );
   }

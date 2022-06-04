@@ -1,6 +1,8 @@
 import 'package:chondo_flutter_project/models/all_views.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/questions_controller.dart';
@@ -9,10 +11,14 @@ class SplashScreen extends StatelessWidget {
    SplashScreen({Key? key}) : super(key: key);
 
    QuestionsController con = QuestionsController();
+   bool isUpdated= false;
+   final QuestionsController _controller = Get.put(QuestionsController());
+
 
 
    @override
   Widget build(BuildContext context) {
+     _controller.loadData();
     gotohome( context);
     return Scaffold(
       body: Container(
@@ -33,13 +39,29 @@ class SplashScreen extends StatelessWidget {
     await Future.delayed(const Duration(seconds: 3));
     if(FirebaseAuth.instance.currentUser != null){
 
-      if(con.load()==true){
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => BottomNav()));
-      }else{
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LangPage()));
-      }
+      final docRef = FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser?.uid);
+      docRef.get().then(
+            (DocumentSnapshot doc) {
+          final data = doc.data() as Map<String, dynamic>;
+
+          if(data['isUpdate']){
+            Navigator.pushReplacement(
+                       context, MaterialPageRoute(builder: (context) => BottomNav()));
+          }else{
+            Navigator.pushReplacement(
+                       context, MaterialPageRoute(builder: (context) => LangPage()));
+          }
+        },
+        onError: (e) => print("Error getting document: $e"),
+      );
+
+      // if(isUpdated){
+      //   Navigator.pushReplacement(
+      //       context, MaterialPageRoute(builder: (context) => BottomNav()));
+      // }else{
+      //   Navigator.pushReplacement(
+      //       context, MaterialPageRoute(builder: (context) => LangPage()));
+      // }
 
     }else {
       Navigator.pushReplacement(
