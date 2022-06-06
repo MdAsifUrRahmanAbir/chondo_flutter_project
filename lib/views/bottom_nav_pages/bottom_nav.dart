@@ -1,7 +1,9 @@
-import 'package:chondo_flutter_project/views/settings.dart';
 import 'package:chondo_flutter_project/views/notification.dart';
+import 'package:chondo_flutter_project/views/settings_page.dart';
 import 'package:chondo_flutter_project/widgets/my_flutter_app_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -17,8 +19,12 @@ class BottomNav extends StatefulWidget {
 
 class _BottomNavState extends State<BottomNav> {
   int currentPage = 2;
-  DateTime date = DateTime(DateTime.now().day);
-  String now = DateFormat('dd').format(DateTime.now());
+  int month = DateTime.now().month;
+  List months =
+  ['January', 'February', 'March', 'April', 'May','June','July','August','September','October','November','December'];
+
+  int now = DateTime.now().day;
+
 
   final List _pages = [
     ReportPage(),
@@ -35,13 +41,13 @@ class _BottomNavState extends State<BottomNav> {
       appBar: currentPage == 3? null: AppBar(
         shadowColor: Colors.transparent,
         backgroundColor: Colors.white,
-        title: Text(now, style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xffF74D8B), fontWeight: FontWeight.w700,),
+        title: Text('$now ${months[month-1]}', style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xffF74D8B), fontWeight: FontWeight.w700,),
           textAlign: TextAlign.center,),
         centerTitle: true,
         leading:  IconButton(
           icon: const Icon(MyFlutterApp.settings, color: Color(0xffFF357D),),
           onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> Settings()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingsPage()));
           },
 
         ),

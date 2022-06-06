@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
-class Settings extends StatelessWidget {
-   Settings({Key? key}) : super(key: key);
+class SettingsPage extends StatelessWidget {
+   SettingsPage({Key? key}) : super(key: key);
 
 
   bool value = false;

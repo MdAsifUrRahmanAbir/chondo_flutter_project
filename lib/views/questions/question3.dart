@@ -97,6 +97,9 @@ class Question3 extends StatelessWidget {
                    },
                    onDaySelected: (selectedDay, focusedDay) {
 
+
+
+                     // _controller.lastPeriodStartDate.value = selectedDay;
                      _controller.lastPeriodStartDate.value = selectedDay;
 
                    },
@@ -111,7 +114,7 @@ class Question3 extends StatelessWidget {
               InkWell(
                 onTap: (){
                   print(_controller.lastPeriodStartDate.value);
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Question4()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Question4()));
                 },
                 child: Container(
                     alignment: Alignment.center,
