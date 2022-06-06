@@ -24,7 +24,7 @@ set(bool bll) async {
 
 
 
-  var periodLength = 5.0.obs;
+  var periodLength = 6.0.obs;
   var cycleLength = 28.0.obs;
   var lastPeriodStartDate = DateTime.now().obs;
 
@@ -64,18 +64,22 @@ set(bool bll) async {
 
 
   loadData() {
+
     final docRef = FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser?.uid);
-    isLoading.value = true;
     docRef.get().then(
           (DocumentSnapshot doc)  {
          var data = doc.data() as Map<String, dynamic>;
          dataMap = data.obs;
 
-         //await Future.delayed(const Duration(seconds: 2));
-         isLoading.value = false;
+         lastPeriodStartDate = dataMap['date'].obs;
+         periodLength = dataMap['periodL'].obs;
+         cycleLength = dataMap['cycleL'].obs;
+
+
 
 
         print('data loaded in controller');
+
 
 
       },

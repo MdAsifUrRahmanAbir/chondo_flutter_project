@@ -7,14 +7,43 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:chondo_flutter_project/models/all_views.dart';
 import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
    ProfilePage({Key? key, }) : super(key: key);
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   //final QuestionsController _controller = Get.put(QuestionsController());
+   final UserInputController _userInputControllercontroller = Get.put(UserInputController());
 
    var data;
 
+   var notes;
+   List _products = [];
 
+   User? user = FirebaseAuth.instance.currentUser;
+
+   fetchProducts() async {
+     QuerySnapshot qn = await FirebaseFirestore.instance.collection("users-notes-${user?.uid}").get();
+     setState(() {
+       for (int i = 0; i < qn.docs.length; i++) {
+         _products.add({
+           "title": qn.docs[i]["title"],
+           "body": qn.docs[i]["body"],
+         });
+       }
+     });
+
+     return qn.docs;
+   }
+
+   @override
+  void initState() {
+    fetchProducts();
+    super.initState();
+  }
 
    @override
   Widget build(BuildContext context) {
@@ -36,7 +65,7 @@ class ProfilePage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: FutureBuilder(
-            future: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get(),
+            future: FirebaseFirestore.instance.collection('users').doc(user!.uid).get(),
 
             builder: (context, snapshot){
               data = snapshot.data;
@@ -252,37 +281,55 @@ class ProfilePage extends StatelessWidget {
                     height: 90,
                     width: double.infinity,
                     child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index){
-                          return Container(
-                            height: 87,
-                            width: 195,
-                            margin: const EdgeInsets.only(right: 5),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _products.length,
 
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.white,
+                      itemBuilder: (context, index){
+                        return Container(
+                          height: 87,
+                          width: 195,
+                          margin: const EdgeInsets.only(right: 5),
 
-                            ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
 
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  top: 1,
-                                  right: 1,
-                                  child: IconButton(
-                                    onPressed: (){
+                          ),
 
-                                    },
-                                    icon: Image.asset('assets/logos/editicon.png', ),
-                                  ),
-                                )
-                              ],
-                            ),
+                          child: Stack(
+                            children: [
 
-                          );
-                        },
-                        itemCount: 5),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('${_products[index]['title']}',
+                                    style: GoogleFonts.roboto(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w700,),
+                                    textAlign: TextAlign.center,),
+
+                                  Text('This month your period length is 8 days.',
+                                    style: GoogleFonts.roboto(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400,),
+                                    textAlign: TextAlign.center,),
+                                ],
+                              ),
+
+                              Positioned(
+                                top: 1,
+                                right: 1,
+                                child: IconButton(
+                                  onPressed: (){
+
+                                  },
+                                  icon: Image.asset('assets/logos/editicon.png', ),
+                                ),
+                              )
+                            ],
+                          ),
+
+                        );
+                      },
+
+                    ),
                   ),
 
                   const SizedBox(height: 17,),

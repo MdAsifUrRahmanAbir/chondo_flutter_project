@@ -1,33 +1,82 @@
 import 'package:chondo_flutter_project/models/all_coltroller.dart';
 import 'package:chondo_flutter_project/widgets/my_flutter_app_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:custom_rating_bar/custom_rating_bar.dart';
 
 
-class HomePage extends StatelessWidget {
+
+class HomePage extends StatefulWidget {
    HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
    final TextEditingController _noteTitleController = TextEditingController();
+
    final TextEditingController _noteBodyController = TextEditingController();
 
    double _progressValue1 = 45;
    double _progressValue2 = 40;
    double _progressValue3 = 21;
 
+   double bloodFlowValue = 0.0;
+   double dizzinessValue = 0.0;
+   double acneValue = 0.0;
+   double feverValue = 0.0;
+   double nauseaValue = 0.0;
+   double shoulderAchesValue = 0.0;
+   double tenderBreastValue = 0.0;
+   double neckachesValue = 0.0;
+   double lowerBackPainValue = 0.0;
+   double aabdominalPainValue = 0.0;
+   double headacheValue = 0.0;
+
    final QuestionsController _controller = Get.put(QuestionsController());
-   //dynamic data = _controller.loadData().;
+   final UserInputController _userInputController = Get.put(UserInputController());
 
    int month = DateTime.now().month;
+
    List months = ['January', 'February', 'March', 'April', 'May','June','July','August','September','October','November','December'];
+
    int now = DateTime.now().day;
 
+   String symptoms = 'You have';
+   List symtomsString = [];
+
+   addSymptoms(){
+
+     for(int i =0; i<_userInputController.addSymtoms.length; i++){
+       symptoms = "$symptoms ${_userInputController.addSymtoms[i]}, ";
+     }
+
+     symptoms = "$symptoms today";
+
+   }
+
+
+
+
+   // Timestamp? stamp ;
+   // DateTime? date ;
+
+   @override
+  void initState() {
+     //stamp = _controller.lastPeriodStartDate.value as Timestamp?;
+     //addSymptoms();
+    // TODO: implement initState
+    super.initState();
+  }
 
    @override
   Widget build(BuildContext context) {
-     _controller.loadData();
+     //_controller.loadData();
 
 
      print(_controller.periodLength.value);
@@ -35,6 +84,8 @@ class HomePage extends StatelessWidget {
      print(_controller.lastPeriodStartDate.value);
      print(_controller.dataMap['firstName']);
      print(_controller.dataMap['secondName']);
+
+
 
 
 
@@ -61,7 +112,7 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('${_controller.dataMap['firstName']}',
+                    Text('16th Day of Cycle',
                       style: GoogleFonts.roboto(fontSize: 18, color: const Color(0xff000000), fontWeight: FontWeight.w700,),
                       textAlign: TextAlign.start,),
                     Text('High Chances of Getting Pregnant',
@@ -193,22 +244,18 @@ class HomePage extends StatelessWidget {
                       child: TableCalendar(
 
                         calendarStyle:  const CalendarStyle(
+
                           selectedDecoration: BoxDecoration(
                               color: Color(0xffF74E8B)
                           ),
-
                           rangeHighlightColor: Color(0xffFFC7DB),
-
                           withinRangeDecoration:  BoxDecoration(
                             color: Color(0xffFFC7DB),
                           ),
-
-
                           rangeStartDecoration:  BoxDecoration(
                               color: Color(0xffF74E8B),
                               shape: BoxShape.circle
                           ),
-
                           rangeEndDecoration:  BoxDecoration(
                               color: Color(0xffF74E8B),
                               shape: BoxShape.circle
@@ -216,7 +263,6 @@ class HomePage extends StatelessWidget {
                           todayDecoration: BoxDecoration(
                             color: Colors.white,
                           ),
-
                           todayTextStyle: TextStyle(color: Colors.black),
 
                         ),
@@ -347,6 +393,19 @@ class HomePage extends StatelessWidget {
 
               const SizedBox(height: 18,),
 
+              _userInputController.addSymtoms.isEmpty ? Container(): Container(
+                width: double.infinity,
+                height: 200,
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20)
+                ),
+
+                child: Text(symptoms),
+
+              )
+
             ],
           ),
         )
@@ -430,8 +489,24 @@ class HomePage extends StatelessWidget {
 
                   InkWell(
 
-                    onTap: (){
-                      //Login(context: context, email: _emailController.text, pass: _passController.text);
+                    onTap: () async{
+
+                        FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+                        User? user = FirebaseAuth.instance.currentUser;
+                        FirebaseAuth.instance.currentUser!.sendEmailVerification();
+
+                        //  writing all the values
+
+
+                        await firebaseFirestore
+                            .collection("users-notes-${user?.uid}")
+                            .doc()
+                            .set({
+                                 'title': _noteTitleController.text,
+                                  'body': _noteBodyController.text
+                              });
+                        //Fluttertoast.showToast(msg: "Account Created and a mail send for varification");
+
                     },
 
                     child: Container(
@@ -468,8 +543,8 @@ class HomePage extends StatelessWidget {
             elevation: 1,
             child: Container(
               padding: const EdgeInsets.all(12),
-              height: 500,
-              width: 290,
+              height: 600,
+              width: 300,
               decoration: BoxDecoration(
                 color: const Color(0xffFFFFFF).withOpacity(.8),
                 borderRadius: BorderRadius.circular(27),
@@ -485,13 +560,10 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 2,),
-
                   Text('How’s Your Health Today?',
                     style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
                     textAlign: TextAlign.center,),
-
                   const SizedBox(height: 17,),
-
                   SizedBox(
                     width: (MediaQuery.of(context).size.width -100)/1.5,
                     child: LinearProgressIndicator(
@@ -500,19 +572,14 @@ class HomePage extends StatelessWidget {
                       value: _progressValue3,
                     ),
                   ),
-
-
-
                   const SizedBox(height: 12,),
-
                   Text('Visit your doctor immediately\nif the meter above turns red',
                     style: GoogleFonts.roboto(fontSize: 15, color: const Color(0xff22215B), fontWeight: FontWeight.w400,),
                     textAlign: TextAlign.center,),
-
                   const SizedBox(height: 28,),
 
                   SizedBox(
-                    height: 250,
+                    height: 320,
                     child: ListView(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
@@ -525,19 +592,35 @@ class HomePage extends StatelessWidget {
                               textAlign: TextAlign.center,),
 
 
-                            const RatingBar.readOnly(
-                              isHalfAllowed: true,
-                              alignment: Alignment.center,
+                             RatingBar(
                               filledIcon: MyFlutterApp.rattingfilled,
-                              halfFilledIcon: MyFlutterApp.rattingfilled,
                               emptyIcon: MyFlutterApp.rating,
-                              filledColor: Color(0xffFF478A),
-                              emptyColor: Color(0xffFF478A),
-                              halfFilledColor: Color(0xffFF478A),
+                              filledColor: const Color(0xffFF478A),
+                              emptyColor: const Color(0xffFF478A),
                               initialRating: 0,
                               maxRating: 5,
                               size: 25,
+                              onRatingChanged: (double value) {
+                                bloodFlowValue = value;
+                              },
                             ),
+
+
+                            // RatingBar.builder(
+                            //   initialRating: 1,
+                            //   minRating: 1,
+                            //   direction: Axis.horizontal,
+                            //   //allowHalfRating: true,
+                            //   itemCount: 5,
+                            //   itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            //   itemBuilder: (context, _) => const Icon(
+                            //     MyFlutterApp.rating,
+                            //     color: Colors.amber,
+                            //   ),
+                            //   onRatingUpdate: (rating) {
+                            //     print(rating);
+                            //   },
+                            // )
                           ],
                         ),
                         const SizedBox(height: 9,),
@@ -549,19 +632,19 @@ class HomePage extends StatelessWidget {
                               textAlign: TextAlign.center,),
 
 
-                            const RatingBar.readOnly(
-                              isHalfAllowed: true,
-                              alignment: Alignment.center,
+                             RatingBar(
                               filledIcon: MyFlutterApp.rattingfilled,
-                              halfFilledIcon: MyFlutterApp.rattingfilled,
                               emptyIcon: MyFlutterApp.rating,
-                              filledColor: Color(0xffFF478A),
-                              emptyColor: Color(0xffFF478A),
-                              halfFilledColor: Color(0xffFF478A),
+                              filledColor: const Color(0xffFF478A),
+                              emptyColor: const Color(0xffFF478A),
                               initialRating: 0,
                               maxRating: 5,
                               size: 25,
+                               onRatingChanged: (double value) {
+                                 dizzinessValue = value;
+                               },
                             ),
+
                           ],
                         ),
                         const SizedBox(height: 9,),
@@ -573,18 +656,18 @@ class HomePage extends StatelessWidget {
                               textAlign: TextAlign.center,),
 
 
-                            const RatingBar.readOnly(
-                              isHalfAllowed: true,
+                            RatingBar(
                               alignment: Alignment.center,
                               filledIcon: MyFlutterApp.rattingfilled,
-                              halfFilledIcon: MyFlutterApp.rattingfilled,
                               emptyIcon: MyFlutterApp.rating,
-                              filledColor: Color(0xffFF478A),
-                              emptyColor: Color(0xffFF478A),
-                              halfFilledColor: Color(0xffFF478A),
+                              filledColor: const Color(0xffFF478A),
+                              emptyColor: const Color(0xffFF478A),
                               initialRating: 0,
                               maxRating: 5,
                               size: 25,
+                              onRatingChanged: (double value) {
+                                acneValue = value;
+                              },
                             ),
                           ],
                         ), const SizedBox(height: 9,),
@@ -596,18 +679,18 @@ class HomePage extends StatelessWidget {
                               textAlign: TextAlign.center,),
 
 
-                            const RatingBar.readOnly(
-                              isHalfAllowed: true,
+                            RatingBar(
                               alignment: Alignment.center,
                               filledIcon: MyFlutterApp.rattingfilled,
-                              halfFilledIcon: MyFlutterApp.rattingfilled,
                               emptyIcon: MyFlutterApp.rating,
-                              filledColor: Color(0xffFF478A),
-                              emptyColor: Color(0xffFF478A),
-                              halfFilledColor: Color(0xffFF478A),
+                              filledColor: const Color(0xffFF478A),
+                              emptyColor: const Color(0xffFF478A),
                               initialRating: 0,
                               maxRating: 5,
                               size: 25,
+                              onRatingChanged: (double value) {
+                                feverValue = value;
+                              },
                             ),
                           ],
                         ), const SizedBox(height: 9,),
@@ -619,18 +702,18 @@ class HomePage extends StatelessWidget {
                               textAlign: TextAlign.center,),
 
 
-                            const RatingBar.readOnly(
-                              isHalfAllowed: true,
+                            RatingBar(
                               alignment: Alignment.center,
                               filledIcon: MyFlutterApp.rattingfilled,
-                              halfFilledIcon: MyFlutterApp.rattingfilled,
                               emptyIcon: MyFlutterApp.rating,
-                              filledColor: Color(0xffFF478A),
-                              emptyColor: Color(0xffFF478A),
-                              halfFilledColor: Color(0xffFF478A),
+                              filledColor: const Color(0xffFF478A),
+                              emptyColor: const Color(0xffFF478A),
                               initialRating: 0,
                               maxRating: 5,
                               size: 25,
+                              onRatingChanged: (double value) {
+                                  nauseaValue = value;
+                              },
                             ),
                           ],
                         ), const SizedBox(height: 9,),
@@ -642,18 +725,18 @@ class HomePage extends StatelessWidget {
                               textAlign: TextAlign.center,),
 
 
-                            const RatingBar.readOnly(
-                              isHalfAllowed: true,
+                            RatingBar(
                               alignment: Alignment.center,
                               filledIcon: MyFlutterApp.rattingfilled,
-                              halfFilledIcon: MyFlutterApp.rattingfilled,
                               emptyIcon: MyFlutterApp.rating,
-                              filledColor: Color(0xffFF478A),
-                              emptyColor: Color(0xffFF478A),
-                              halfFilledColor: Color(0xffFF478A),
+                              filledColor: const Color(0xffFF478A),
+                              emptyColor: const Color(0xffFF478A),
                               initialRating: 0,
                               maxRating: 5,
                               size: 25,
+                              onRatingChanged: (double value) {
+                                shoulderAchesValue = value;
+                              },
                             ),
                           ],
                         ), const SizedBox(height: 9,),
@@ -665,18 +748,18 @@ class HomePage extends StatelessWidget {
                               textAlign: TextAlign.center,),
 
 
-                            const RatingBar.readOnly(
-                              isHalfAllowed: true,
+                            RatingBar(
                               alignment: Alignment.center,
                               filledIcon: MyFlutterApp.rattingfilled,
-                              halfFilledIcon: MyFlutterApp.rattingfilled,
                               emptyIcon: MyFlutterApp.rating,
-                              filledColor: Color(0xffFF478A),
-                              emptyColor: Color(0xffFF478A),
-                              halfFilledColor: Color(0xffFF478A),
-                              initialRating: 2,
+                              filledColor: const Color(0xffFF478A),
+                              emptyColor: const Color(0xffFF478A),
+                              initialRating: 0,
                               maxRating: 5,
                               size: 25,
+                              onRatingChanged: (double value) {
+                                tenderBreastValue = value;
+                              },
                             ),
                           ],
                         ), const SizedBox(height: 9,),
@@ -688,18 +771,18 @@ class HomePage extends StatelessWidget {
                               textAlign: TextAlign.center,),
 
 
-                            const RatingBar.readOnly(
-                              isHalfAllowed: true,
+                            RatingBar(
                               alignment: Alignment.center,
                               filledIcon: MyFlutterApp.rattingfilled,
-                              halfFilledIcon: MyFlutterApp.rattingfilled,
                               emptyIcon: MyFlutterApp.rating,
-                              filledColor: Color(0xffFF478A),
-                              emptyColor: Color(0xffFF478A),
-                              halfFilledColor: Color(0xffFF478A),
-                              initialRating: 1,
+                              filledColor: const Color(0xffFF478A),
+                              emptyColor: const Color(0xffFF478A),
+                              initialRating: 0,
                               maxRating: 5,
                               size: 25,
+                              onRatingChanged: (double value) {
+                                neckachesValue = value;
+                              },
                             ),
                           ],
                         ), const SizedBox(height: 9,),
@@ -711,18 +794,18 @@ class HomePage extends StatelessWidget {
                               textAlign: TextAlign.center,),
 
 
-                            const RatingBar.readOnly(
-                              isHalfAllowed: true,
+                            RatingBar(
                               alignment: Alignment.center,
                               filledIcon: MyFlutterApp.rattingfilled,
-                              halfFilledIcon: MyFlutterApp.rattingfilled,
                               emptyIcon: MyFlutterApp.rating,
-                              filledColor: Color(0xffFF478A),
-                              emptyColor: Color(0xffFF478A),
-                              halfFilledColor: Color(0xffFF478A),
-                              initialRating: 4,
+                              filledColor: const Color(0xffFF478A),
+                              emptyColor: const Color(0xffFF478A),
+                              initialRating: 0,
                               maxRating: 5,
                               size: 25,
+                              onRatingChanged: (double value) {
+                                lowerBackPainValue = value;
+                              },
                             ),
                           ],
                         ), const SizedBox(height: 9,),
@@ -734,18 +817,18 @@ class HomePage extends StatelessWidget {
                               textAlign: TextAlign.center,),
 
 
-                            const RatingBar.readOnly(
-                              isHalfAllowed: true,
+                            RatingBar(
                               alignment: Alignment.center,
                               filledIcon: MyFlutterApp.rattingfilled,
-                              halfFilledIcon: MyFlutterApp.rattingfilled,
                               emptyIcon: MyFlutterApp.rating,
-                              filledColor: Color(0xffFF478A),
-                              emptyColor: Color(0xffFF478A),
-                              halfFilledColor: Color(0xffFF478A),
-                              initialRating: 5,
+                              filledColor: const Color(0xffFF478A),
+                              emptyColor: const Color(0xffFF478A),
+                              initialRating: 0,
                               maxRating: 5,
                               size: 25,
+                              onRatingChanged: (double value) {
+                                aabdominalPainValue = value;
+                              },
                             ),
                           ],
                         ), const SizedBox(height: 9,),
@@ -757,18 +840,18 @@ class HomePage extends StatelessWidget {
                               textAlign: TextAlign.center,),
 
 
-                            const RatingBar.readOnly(
-                              isHalfAllowed: true,
+                            RatingBar(
                               alignment: Alignment.center,
                               filledIcon: MyFlutterApp.rattingfilled,
-                              halfFilledIcon: MyFlutterApp.rattingfilled,
                               emptyIcon: MyFlutterApp.rating,
-                              filledColor: Color(0xffFF478A),
-                              emptyColor: Color(0xffFF478A),
-                              halfFilledColor: Color(0xffFF478A),
-                              initialRating: 2,
+                              filledColor: const Color(0xffFF478A),
+                              emptyColor: const Color(0xffFF478A),
+                              initialRating: 0,
                               maxRating: 5,
                               size: 25,
+                              onRatingChanged: (double value) {
+                                headacheValue = value;
+                              },
                             ),
                           ],
                         ),
@@ -777,11 +860,61 @@ class HomePage extends StatelessWidget {
                   ),
 
 
-                  const SizedBox(height: 12,),
+                  const Spacer(),
                   InkWell(
 
                     onTap: (){
-                      //Login(context: context, email: _emailController.text, pass: _passController.text);
+                      /*
+                        double bloodFlowValue = 0.0;
+                         double dizzinessValue = 0.0;
+                         double acneValue = 0.0;
+                         double feverValue = 0.0;
+                         double nauseaValue = 0.0;
+                         double shoulderAchesValue = 0.0;
+                         double tenderBreastValue = 0.0;
+                         double neckachesValue = 0.0;
+                         double lowerBackPainValue = 0.0;
+                         double aabdominalPainValue = 0.0;
+                         double headacheValue = 0.0;
+                       */
+                      if(bloodFlowValue>1){
+                        _userInputController.addSymtoms.value.add('Blood Flow');
+                      }
+                      if(dizzinessValue>1){
+                        _userInputController.addSymtoms.value.add('Dizziness');
+                      }
+                      if(acneValue>1){
+                        _userInputController.addSymtoms.value.add('Acne');
+                      }
+                      if(feverValue>1){
+                        _userInputController.addSymtoms.value.add('Fever');
+                      }
+                      if(nauseaValue>1){
+                        _userInputController.addSymtoms.value.add('Nausea');
+                      }
+                      if(shoulderAchesValue>1){
+                        _userInputController.addSymtoms.value.add('Shoulder Aches');
+                      }
+                      if(tenderBreastValue>1){
+                        _userInputController.addSymtoms.value.add('Tender Breast');
+                      }
+                      if(neckachesValue>1){
+                        _userInputController.addSymtoms.value.add('Neckaches');
+                      }
+                      if(lowerBackPainValue>1){
+                        _userInputController.addSymtoms.value.add('Lower Back Pain');
+                      }
+                      if(aabdominalPainValue>1){
+                        _userInputController.addSymtoms.value.add('Abdominal Pain');
+                      }
+                      if(headacheValue>1){
+                        _userInputController.addSymtoms.value.add('Headache');
+                      }
+
+                      setState(() {
+                        addSymptoms();
+                      });
+
                     },
 
                     child: Container(
@@ -797,7 +930,8 @@ class HomePage extends StatelessWidget {
                         style: GoogleFonts.roboto(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700,),
                         textAlign: TextAlign.center,),
                     ),
-                  )
+                  ),
+                  const SizedBox(height: 12,),
                 ],
               ),
 

@@ -224,46 +224,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: Colors.redAccent.withOpacity(.1),
-                            borderRadius: BorderRadius.circular(28),
-                            border: Border.all(color: Colors.black, width: .8)
-                        ),
-                        child: Container(
-                          child: DropdownButton(
-                            value: _value,
-                            items:  [
 
-                              DropdownMenuItem(
-                                child: Text("Gender", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.right,),
-                                value: 1,
-                              ),
-
-                              DropdownMenuItem(
-                                child: Text("Female", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.right,),
-                                value: 2,
-                              ),
-
-                              DropdownMenuItem(
-                                child: Text("Male [who have period]", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.right,),
-                                value: 3,
-                              ),
-
-                            ],
-
-                            onChanged: ( value){
-                              _value = _value;
-                            },
-                          ),
-                        )
-                      ),
-                    )
                   ],
                 ),
 
@@ -297,6 +258,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     Text('Already have an account?', style: GoogleFonts.roboto(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
                     TextButton(
                       onPressed: (){
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()),
+                                (route) => false);
 
                       },
                       child: Text('Login', style: GoogleFonts.roboto(fontSize: 12, fontWeight: FontWeight.w900,),textAlign: TextAlign.center,),
@@ -336,9 +299,6 @@ class _SignupScreenState extends State<SignupScreen> {
    }
 
    postDetailsToFireStore() async {
-     //  calling our firestore
-     //  calling our user model
-     //  sending these values
 
      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
      User? user = FirebaseAuth.instance.currentUser;

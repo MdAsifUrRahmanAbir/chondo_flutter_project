@@ -1,11 +1,12 @@
 import 'package:chondo_flutter_project/models/all_views.dart';
+import 'package:chondo_flutter_project/models/all_coltroller.dart';
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../controllers/questions_controller.dart';
 
 class SplashScreen extends StatelessWidget {
    SplashScreen({Key? key}) : super(key: key);
@@ -13,11 +14,13 @@ class SplashScreen extends StatelessWidget {
    QuestionsController con = QuestionsController();
    bool isUpdated= false;
    final QuestionsController _controller = Get.put(QuestionsController());
+   final UserInputController _userInputControllercontroller = Get.put(UserInputController());
 
 
 
    @override
   Widget build(BuildContext context) {
+     //_userInputControllercontroller.loadData();
      _controller.loadData();
     gotohome( context);
     return Scaffold(
@@ -45,6 +48,30 @@ class SplashScreen extends StatelessWidget {
           final data = doc.data() as Map<String, dynamic>;
 
           if(data['isUpdate']){
+
+              // final docRef = FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser?.uid);
+              // docRef.get().then(
+              //       (DocumentSnapshot doc)  {
+              //     var data = doc.data() as Map<String, dynamic>;
+              //     _controller.dataMap = data.obs;
+              //
+              //
+              //
+              //     _controller.lastPeriodStartDate = _controller.dataMap['date'].obs;
+              //     _controller.periodLength = _controller.dataMap['periodL'].obs;
+              //     _controller.cycleLength = _controller.dataMap['cycleL'].obs;
+              //
+              //
+              //
+              //
+              //     print('data loaded in controller');
+              //
+              //
+              //
+              //   },
+              //   onError: (e) => print("Error getting document: $e"),
+              // );
+
             Navigator.pushReplacement(
                        context, MaterialPageRoute(builder: (context) => BottomNav()));
           }else{
