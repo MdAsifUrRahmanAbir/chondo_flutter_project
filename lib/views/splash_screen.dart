@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
 
 
 class SplashScreen extends StatelessWidget {
@@ -22,16 +23,19 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
      //_userInputControllercontroller.loadData();
      _controller.loadData();
-    gotohome( context);
-    return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: Image.asset('assets/logos/splashlogo.png'),
-        decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage('assets/backgrounds/splashscreen.jpg', ), fit: BoxFit.cover )
-        ),
+     gotohome( context);
+    return ScaffoldGradientBackground(
+
+      gradient: const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color(0xffFF5F99),
+          Color(0xffFF377F),
+        ],
       ),
+
+      body: Center(child: Image.asset('assets/logos/splashlogo.png')),
     );
   }
 
@@ -39,7 +43,7 @@ class SplashScreen extends StatelessWidget {
 
   Future gotohome(BuildContext context) async {
 
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 2));
     if(FirebaseAuth.instance.currentUser != null){
 
       final docRef = FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser?.uid);
