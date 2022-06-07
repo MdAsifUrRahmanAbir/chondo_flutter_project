@@ -97,6 +97,7 @@ class _LangPageState extends State<LangPage> {
                                 "Select Language",
                                 style: TextStyle(color: Color(0xffFB699E)),textAlign: TextAlign.center,),
                             ),
+                              alignment: Alignment.bottomCenter,
                               value: 1,
                           ),
                           DropdownMenuItem(
@@ -110,6 +111,7 @@ class _LangPageState extends State<LangPage> {
                                 ),
                                 child: const Text("English", style: TextStyle(color:  Color(0xffFB699E)),textAlign: TextAlign.center,)),
                             value: 2,
+                            alignment: Alignment.bottomCenter,
                           ),
                           DropdownMenuItem(
                             child: Container(
@@ -122,6 +124,7 @@ class _LangPageState extends State<LangPage> {
                                 ),
                                 child: const Text("Bengali", style: TextStyle(color:  Color(0xffFB699E)),textAlign: TextAlign.center,)),
                             value: 3,
+                            alignment: Alignment.bottomCenter,
                           )
                         ],
 
