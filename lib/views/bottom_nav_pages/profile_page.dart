@@ -285,21 +285,31 @@ class _ProfilePageState extends State<ProfilePage> {
                       itemCount: _products.length,
 
                       itemBuilder: (context, index){
-                        return Container(
-                          height: 87,
-                          width: 195,
-                          margin: const EdgeInsets.only(right: 5),
+                        return Stack(
+                          children: [
 
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.white,
+                            Container(
 
-                          ),
+                              height: 85,
+                              width: 215,
+                              margin: const EdgeInsets.only(right: 5),
+                              padding: const EdgeInsets.only(left: 22, top: 10, right: 10, bottom: 20),
 
-                          child: Stack(
-                            children: [
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(23),
+                                  color: Colors.white,
+                                  boxShadow:  [
+                                    BoxShadow(
+                                        color: const Color(0xff000000).withOpacity(.05),
+                                        spreadRadius: 0,
+                                        blurRadius: 15,
+                                        offset: const Offset(0, 2)
+                                    )
+                                  ]
 
-                              Column(
+                              ),
+
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -307,25 +317,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                     style: GoogleFonts.roboto(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w700,),
                                     textAlign: TextAlign.center,),
 
-                                  Text('This month your period length is 8 days.',
+                                  Text('${_products[index]['body']}',
                                     style: GoogleFonts.roboto(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400,),
                                     textAlign: TextAlign.center,),
                                 ],
                               ),
+                            ),
 
-                              Positioned(
-                                top: 1,
-                                right: 1,
-                                child: IconButton(
-                                  onPressed: (){
+                            Positioned(
+                              top: 1,
+                              right: 1,
+                              child: IconButton(
+                                onPressed: (){
 
-                                  },
-                                  icon: Image.asset('assets/logos/editicon.png', ),
-                                ),
-                              )
-                            ],
-                          ),
-
+                                },
+                                icon: Image.asset('assets/logos/editicon.png', ),
+                              ),
+                            )
+                          ],
                         );
                       },
 

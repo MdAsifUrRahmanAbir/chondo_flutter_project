@@ -5,6 +5,10 @@ import 'package:chondo_flutter_project/widgets/container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
+
+import '../widgets/custom_button.dart';
+import '../widgets/text_input_field.dart';
 
 class LoginScreen extends StatefulWidget {
    LoginScreen({Key? key}) : super(key: key);
@@ -37,7 +41,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldGradientBackground(
+
+      gradient: const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color(0xFFFFF1F6),
+          Color(0xFFFFE3ED),
+        ],
+      ),
+
       body: Container(
         alignment: Alignment.center,
         height: double.infinity,
@@ -96,36 +110,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal:  40),
-                    child: TextFormField(
-                      textAlign: TextAlign.center,
-                      controller: _emailController,
-                      decoration:  InputDecoration(
-                          hintText: 'Enter email or username',
-                          hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
-                          fillColor: Colors.redAccent.withOpacity(.1),
-                          filled: true,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(50),
-                          )
-                      ),
-                    ),
+                    child: CustomTextInput(text: 'Enter email or username', controller: _emailController,),
                   ),
                   const SizedBox(height: 20,),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal:  40),
-                    child: TextFormField(
-                      textAlign: TextAlign.center,
-                      controller: _passController,
-                      decoration:  InputDecoration(
-                          hintText: 'Enter password',
-                          hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
-                          fillColor: Colors.redAccent.withOpacity(.1),
-                          filled: true,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(50),
-                          )
-                      ),
-                    ),
+                    child: CustomTextInput(text: 'Enter Password', controller: _passController,),
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -152,18 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Login(context: context, email: _emailController.text, pass: _passController.text);
                 },
 
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 52,
-                  width: 152,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(image: AssetImage('assets/buttons/buttonloin.png'), fit: BoxFit.cover, )
-                  ),
-
-                  child: Text('Login',
-                    style: GoogleFonts.roboto(fontSize: 24, color: Colors.white, fontWeight: FontWeight.w700,),
-                    textAlign: TextAlign.center,),
-                ),
+                child: CustomButton(text: 'Login',)
               )
 
             ],

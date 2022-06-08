@@ -26,20 +26,19 @@ class _HomePageState extends State<HomePage> {
    double _progressValue2 = 40;
    double _progressValue3 = 21;
 
-   double bloodFlowValue = 0.0;
-   double dizzinessValue = 0.0;
-   double acneValue = 0.0;
-   double feverValue = 0.0;
-   double nauseaValue = 0.0;
-   double shoulderAchesValue = 0.0;
-   double tenderBreastValue = 0.0;
-   double neckachesValue = 0.0;
-   double lowerBackPainValue = 0.0;
-   double aabdominalPainValue = 0.0;
-   double headacheValue = 0.0;
+   late double bloodFlowValue ;
+   late double dizzinessValue ;
+   late double acneValue ;
+   late double feverValue ;
+   late double nauseaValue ;
+   late double shoulderAchesValue ;
+   late double tenderBreastValue ;
+   late double neckachesValue ;
+   late double lowerBackPainValue ;
+   late double aabdominalPainValue ;
+   late double headacheValue;
 
    final QuestionsController _controller = Get.put(QuestionsController());
-   final UserInputController _userInputController = Get.put(UserInputController());
 
    int month = DateTime.now().month;
 
@@ -47,27 +46,60 @@ class _HomePageState extends State<HomePage> {
 
    int now = DateTime.now().day;
 
-   String symptoms = 'You have';
+   String symptoms = '';
    List symtomsString = [];
+   Map today = {};
+   late int date;
 
    addSymptoms(){
 
-     for(int i =0; i<_userInputController.addSymtoms.length; i++){
-       symptoms = "$symptoms ${_userInputController.addSymtoms[i]}, ";
+     //print(symtomsString);
+
+     for(int i =0; i<symtomsString.length; i++){
+       if(i == symtomsString.length-1){
+         symptoms = "$symptoms ${symtomsString[i]} ";
+       }else{
+         symptoms = "$symptoms ${symtomsString[i]}, ";
+       }
      }
 
-     symptoms = "$symptoms today";
 
+     print(symtomsString);
+     symtomsString.clear();
+     print(symtomsString);
+
+     symptoms = "${symptoms}today";
+     setState(() {
+       symtomsString = [];
+       print(symptoms);
+
+       today.addAll({
+         'Date': date,
+         'symptoms': symptoms
+       });
+     });
    }
 
+   List _products = [];
+   User? user = FirebaseAuth.instance.currentUser;
+   fetchProducts() async {
+     QuerySnapshot qn = await FirebaseFirestore.instance.collection("users-notes-${user?.uid}").get();
+     setState(() {
+       for (int i = 0; i < qn.docs.length; i++) {
+         _products.add({
+           "title": qn.docs[i]["title"],
+           "body": qn.docs[i]["body"],
+         });
+       }
+     });
 
-
-
-   // Timestamp? stamp ;
-   // DateTime? date ;
+     return qn.docs;
+   }
 
    @override
   void initState() {
+     symptoms = '';
+     fetchProducts();
      //stamp = _controller.lastPeriodStartDate.value as Timestamp?;
      //addSymptoms();
     // TODO: implement initState
@@ -78,17 +110,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
      //_controller.loadData();
 
-
      print(_controller.periodLength.value);
      print(_controller.cycleLength.value);
      print(_controller.lastPeriodStartDate.value);
      print(_controller.dataMap['firstName']);
      print(_controller.dataMap['secondName']);
-
-
-
-
-
 
     return Scaffold(
         backgroundColor: const Color(0xffFFF3F8),
@@ -393,18 +419,137 @@ class _HomePageState extends State<HomePage> {
 
               const SizedBox(height: 18,),
 
-              _userInputController.addSymtoms.isEmpty ? Container(): Container(
+              SizedBox(
+                height: 85,
                 width: double.infinity,
-                height: 200,
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20)
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _products.length,
+
+                  itemBuilder: (context, index){
+                    return Stack(
+                      children: [
+
+                        Container(
+                          height: 85,
+                          width: MediaQuery.of(context).size.width-40,
+                          margin: const EdgeInsets.only(right: 5),
+                          padding: const EdgeInsets.only(left: 22, top: 10, right: 10, bottom: 20),
+
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(23),
+                              color: Colors.white,
+                              boxShadow:  [
+                                BoxShadow(
+                                    color: const Color(0xff000000).withOpacity(.05),
+                                    spreadRadius: 0,
+                                    blurRadius: 15,
+                                    offset: const Offset(0,2)
+                                )
+                              ]
+
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('${_products[index]['title']}',
+                                style: GoogleFonts.roboto(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w700,),
+                                textAlign: TextAlign.center,),
+
+                              Text('${_products[index]['body']}',
+                                style: GoogleFonts.roboto(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400,),
+                                textAlign: TextAlign.center,),
+                            ],
+                          ),
+                        ),
+
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: IconButton(
+                            onPressed: (){
+
+                            },
+                            icon: ClipRRect(
+                                child: Image.asset('assets/logos/editicon.png',),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  },
+
                 ),
+              ),
 
-                child: Text(symptoms),
+              const SizedBox(height: 18,),
 
-              )
+              SizedBox(
+                height: 132,
+                width: double.infinity,
+                child: Container(
+                  height: 132,
+                  width: MediaQuery.of(context).size.width-30,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(23),
+                      color: Colors.white,
+                      boxShadow:  [
+                        BoxShadow(
+                            color: const Color(0xff000000).withOpacity(.05),
+                            spreadRadius: 0,
+                            blurRadius: 15,
+                            offset: const Offset(0, 2)
+                        )
+                      ]
+
+                  ),
+                  child: Column(
+
+                    children: [
+                      Row(
+
+                        children: [
+                          IconButton(
+                            onPressed: (){
+
+                            },
+                            icon: ClipRRect(
+                              child: Image.asset('assets/logos/editicon.png',),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          Text(symptoms,
+                            style: GoogleFonts.roboto(fontSize: 15, color: Colors.black, fontWeight: FontWeight.w400,),
+                            textAlign: TextAlign.center,),
+
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: (){
+
+                            },
+                            icon: ClipRRect(
+                              child: Image.asset('assets/logos/editicon.png',),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          Text(symptoms,
+                            style: GoogleFonts.roboto(fontSize: 15, color: Colors.black, fontWeight: FontWeight.w400,),
+                            textAlign: TextAlign.center,),
+
+                        ],
+                      ),
+                    ],
+                  ),
+
+                )
+              ),
+
+
 
             ],
           ),
@@ -877,42 +1022,59 @@ class _HomePageState extends State<HomePage> {
                          double aabdominalPainValue = 0.0;
                          double headacheValue = 0.0;
                        */
+                      print(symtomsString);
+
                       if(bloodFlowValue>1){
-                        _userInputController.addSymtoms.value.add('Blood Flow');
+                        symtomsString.add('Blood Flow');
                       }
                       if(dizzinessValue>1){
-                        _userInputController.addSymtoms.value.add('Dizziness');
+                        symtomsString.add('Dizziness');
                       }
                       if(acneValue>1){
-                        _userInputController.addSymtoms.value.add('Acne');
+                        symtomsString.add('Acne');
                       }
                       if(feverValue>1){
-                        _userInputController.addSymtoms.value.add('Fever');
+                        symtomsString.add('Fever');
                       }
                       if(nauseaValue>1){
-                        _userInputController.addSymtoms.value.add('Nausea');
+                        symtomsString.add('Nausea');
                       }
                       if(shoulderAchesValue>1){
-                        _userInputController.addSymtoms.value.add('Shoulder Aches');
+                        symtomsString.add('Shoulder Aches');
                       }
                       if(tenderBreastValue>1){
-                        _userInputController.addSymtoms.value.add('Tender Breast');
+                        symtomsString.add('Tender Breast');
                       }
                       if(neckachesValue>1){
-                        _userInputController.addSymtoms.value.add('Neckaches');
+                        symtomsString.add('Neckaches');
                       }
                       if(lowerBackPainValue>1){
-                        _userInputController.addSymtoms.value.add('Lower Back Pain');
+                        symtomsString.add('Lower Back Pain');
                       }
                       if(aabdominalPainValue>1){
-                        _userInputController.addSymtoms.value.add('Abdominal Pain');
+                        symtomsString.add('Abdominal Pain');
                       }
                       if(headacheValue>1){
-                        _userInputController.addSymtoms.value.add('Headache');
+                        symtomsString.add('Headache');
                       }
 
                       setState(() {
+                        symptoms = 'You have';
+                        date = DateTime.now().day;
                         addSymptoms();
+
+                         bloodFlowValue = 0.0;
+                         dizzinessValue = 0.0;
+                         acneValue = 0.0;
+                         feverValue = 0.0;
+                         nauseaValue = 0.0;
+                         shoulderAchesValue = 0.0;
+                         tenderBreastValue = 0.0;
+                         neckachesValue = 0.0;
+                         lowerBackPainValue = 0.0;
+                         aabdominalPainValue = 0.0;
+                         headacheValue = 0.0;
+                        //symptoms = '';
                       });
 
                     },

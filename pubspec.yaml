@@ -53,6 +53,7 @@ dependencies:
   emoji_picker_flutter: ^1.2.1
   webview_flutter: ^3.0.4
   flutter_rating_bar:
+  flutter_svg:
 
 
 
@@ -84,6 +85,7 @@ flutter:
     - assets/logos/
     - assets/buttons/
     - assets/emojis/
+    - assets/welcome/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -7,6 +7,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
+
+import '../widgets/custom_button.dart';
+import '../widgets/text_input_field.dart';
 
 class SignupScreen extends StatefulWidget {
    SignupScreen({Key? key}) : super(key: key);
@@ -29,249 +33,169 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
 
     return SafeArea(
-      child: Scaffold(
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage('assets/backgrounds/welcomescreen.png'),fit: BoxFit.cover)
-          ),
+      child: ScaffoldGradientBackground(
 
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment. center,
-              children: [
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFFFFF1F6),
+            Color(0xFFFFE3ED),
+          ],
+        ),
 
-                const SizedBox(height: 70,),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment. center,
+            children: [
 
-                containerButton(
-                        (){
-                     signInWithGoogle(context);
-                    },
-                    Colors.white,
-                    'assets/logos/googlelogo.png',
-                    "Signup with Google",
-                    Colors.black,
-                    280.0,
-                    FontWeight.w500
-                ),
+              const SizedBox(height: 70,),
 
-                const SizedBox(height: 20,),
-
-                containerButton(
-                        (){
-                          signInWithFacebook(context);
-                    },
-                    Colors.blue,
-                    'assets/logos/fblogo.png',
-                    "Signup with Facebook",
-                    Colors.white,
-                    280.0,
-                    FontWeight.w500
-                ),
-
-                const SizedBox(height: 20,),
-
-                Text('Or, sign up by providiing the following information',
-                  style: GoogleFonts.roboto(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w700,),
-                  textAlign: TextAlign.center,),
-
-                const SizedBox(height: 30,),
-
-
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:  40),
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        controller: _firstNameController,
-                        decoration:  InputDecoration(
-                            hintText: 'First Name',
-                            hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
-                            fillColor: Colors.redAccent.withOpacity(.1),
-                            filled: true,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50),
-                            )
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:  40),
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        controller: _lastNameController,
-                        decoration:  InputDecoration(
-                          hintText: 'Last Name',
-                            hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), backgroundColor: Color(0xFFDBE8),fontSize: 15),
-                            filled: true,
-                            fillColor: Colors.redAccent.withOpacity(.1),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50),
-                            )
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:  40),
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        controller: _userNameController,
-                        decoration:  InputDecoration(
-                            hintText: 'Chose Username',
-                            hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
-                            fillColor: Colors.redAccent.withOpacity(.1),
-                            filled: true,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50),
-                            )
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:  40),
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        controller: _emailController,
-                        decoration:  InputDecoration(
-                            hintText: 'Email Address',
-                            hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
-                            fillColor: Colors.redAccent.withOpacity(.1),
-                            filled: true,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50),
-                            )
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 20,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:  40),
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        controller: _passController,
-                        decoration:  InputDecoration(
-                            hintText: 'Password',
-                            hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
-                            fillColor: Colors.redAccent.withOpacity(.1),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 20,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.redAccent.withOpacity(.1),
-                                borderRadius: BorderRadius.circular(28),
-                                border: Border.all(color: Colors.black, width: .8)
-                              ),
-                              child: DropdownButton(
-                                  value: _value,
-                                  items:  [
-                                    DropdownMenuItem(
-                                      child: Text("+880", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
-                                      value: 1,
-                                    ),
-                                    DropdownMenuItem(
-                                      child: Text("+99", style: TextStyle(color: Colors.red.withOpacity(.5)),textAlign: TextAlign.center,),
-                                      value: 2,
-                                    )
-                                  ],
-
-                                  onChanged: ( value){
-                                    _value = _value;
-                                  },
-                                  hint:Text("+880")
-                                ),
-                            ),
-                            ),
-
-                          const SizedBox(width: 2,),
-                          Expanded(
-                            flex: 10,
-                            child: TextFormField(
-                              textAlign: TextAlign.center,
-                              controller: _phoneNumberController,
-                              decoration:  InputDecoration(
-                                  hintText: 'Phone Number',
-                                  hintStyle:  TextStyle(color: Colors.red.withOpacity(.5), fontSize: 15),
-                                  fillColor: Colors.redAccent.withOpacity(.1),
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  )
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                  ],
-                ),
-
-                const SizedBox(height: 30,),
-
-                InkWell(
-
-                  onTap: (){
-                    Signup(email: _emailController.text,
-                        pass: _passController.text,
-                        );
+              containerButton(
+                      (){
+                   signInWithGoogle(context);
                   },
+                  Colors.white,
+                  'assets/logos/googlelogo.png',
+                  "Signup with Google",
+                  Colors.black,
+                  280.0,
+                  FontWeight.w500
+              ),
 
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 52,
-                    width: 152,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(image: AssetImage('assets/buttons/buttonloin.png'))
-                    ),
+              const SizedBox(height: 20,),
 
-                    child: Text('signup',
-                      style: GoogleFonts.roboto(fontSize: 24, color: Colors.white, fontWeight: FontWeight.w700,),
-                      textAlign: TextAlign.center,),
+              containerButton(
+                      (){
+                        signInWithFacebook(context);
+                  },
+                  Colors.blue,
+                  'assets/logos/fblogo.png',
+                  "Signup with Facebook",
+                  Colors.white,
+                  280.0,
+                  FontWeight.w500
+              ),
+
+              const SizedBox(height: 20,),
+
+              Text('Or, sign up by providiing the following information',
+                style: GoogleFonts.roboto(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w700,),
+                textAlign: TextAlign.center,),
+
+              const SizedBox(height: 30,),
+
+
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:  40),
+                    child: CustomTextInput(text: 'First Name', controller: _firstNameController,),
                   ),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Already have an account?', style: GoogleFonts.roboto(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
-                    TextButton(
-                      onPressed: (){
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()),
-                                (route) => false);
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:  40),
+                    child: CustomTextInput(text: 'Last Name', controller: _lastNameController,),
+                  ),
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:  40),
+                    child: CustomTextInput(text: 'Chose User Name', controller: _userNameController,),
+                  ),
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:  40),
+                    child: CustomTextInput(text: 'Email Address', controller: _emailController,),
+                  ),
 
-                      },
-                      child: Text('Login', style: GoogleFonts.roboto(fontSize: 12, fontWeight: FontWeight.w900,),textAlign: TextAlign.center,),
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:  40),
+                    child: CustomTextInput(text: 'Password', controller: _passController,),
+                  ),
 
-                    )
-                  ],
-                ),
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              color: const Color(0xffFFDBE8),
+                              borderRadius: BorderRadius.circular(20),
+                              //border: Border.all(color: Colors.black, width: .8)
+                            ),
+                            child: DropdownButton(
+                                value: _value,
+                                items:   [
+                                  DropdownMenuItem(
+                                    child: Text("+880",
+                                      style:GoogleFonts.roboto(color: const Color(0xffFF8AB5), fontSize: 15, fontWeight: FontWeight.w500), textAlign: TextAlign.center,),
+                                      value: 1,
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text("+99",
+                                      style:GoogleFonts.roboto(color: const Color(0xffFF8AB5), fontSize: 15, fontWeight: FontWeight.w500), textAlign: TextAlign.center,),
+                                    value: 2,
+                                  )
+                                ],
 
-              ],
-            ),
-          )
+                                onChanged: ( value){
+                                  _value = _value;
+                                },
+                                hint:const Text("+88")
+                              ),
+                          ),
+                          ),
 
+                        const SizedBox(width: 2,),
+                        Expanded(
+                          flex: 10,
+                          child: CustomTextInput(text: 'Phone Number', controller: _phoneNumberController,),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                ],
+              ),
+
+              const SizedBox(height: 30,),
+
+              InkWell(
+
+                onTap: (){
+                  Signup(email: _emailController.text,
+                      pass: _passController.text,
+                      );
+                },
+
+                child: CustomButton(text: 'Signup',)
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Already have an account?', style: GoogleFonts.roboto(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
+                  TextButton(
+                    onPressed: (){
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()),
+                              (route) => false);
+
+                    },
+                    child: Text('Login', style: GoogleFonts.roboto(fontSize: 12, fontWeight: FontWeight.w900,),textAlign: TextAlign.center,),
+
+                  )
+                ],
+              ),
+
+            ],
+          ),
         ),
       ),
     );

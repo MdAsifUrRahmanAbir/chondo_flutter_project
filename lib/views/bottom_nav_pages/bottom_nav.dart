@@ -41,7 +41,7 @@ class _BottomNavState extends State<BottomNav> {
       appBar: currentPage == 3? null: AppBar(
         shadowColor: Colors.transparent,
         backgroundColor: Colors.white,
-        title: Text('$now ${months[month-1]}', style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xffF74D8B), fontWeight: FontWeight.w700,),
+        title: Text('$now ${months[month-1]}', style: GoogleFonts.roboto(fontSize: 20, color: const Color(0xff22215B), fontWeight: FontWeight.w700,),
           textAlign: TextAlign.center,),
         centerTitle: true,
         leading:  IconButton(
