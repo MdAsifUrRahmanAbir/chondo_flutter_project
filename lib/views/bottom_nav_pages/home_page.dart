@@ -444,7 +444,7 @@ class _HomePageState extends State<HomePage> {
                                     color: const Color(0xff000000).withOpacity(.05),
                                     spreadRadius: 0,
                                     blurRadius: 15,
-                                    offset: const Offset(0, 2)
+                                    offset: const Offset(0,2)
                                 )
                               ]
 
